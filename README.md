@@ -15,5 +15,3 @@ php artisan make:model NombreEntidad -m
 
 ## Crear controlador de modelos
 php artisan make:controller EntidadController
-
-
