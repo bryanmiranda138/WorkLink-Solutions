@@ -13,4 +13,9 @@ class Postulante extends Model
     public $incrementing = true;
     protected $keyType = 'int';
     protected $fillable = ['primerNombre', 'segundoNombre', 'primerApellido', 'segundoApellido'];
+
+    public function idiomas()
+    {
+        return $this->hasMany(Idioma::class, 'postulante_id', 'idPostulante');
+    }
 }

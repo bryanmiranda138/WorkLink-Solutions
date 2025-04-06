@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Postulante;
+use App\Models\Idioma;
 use Illuminate\Http\Request;
 
 class PostulanteController extends Controller
@@ -24,10 +25,24 @@ class PostulanteController extends Controller
             'primerNombre' => 'required',
             'segundoNombre' => 'nullable',
             'primerApellido' => 'required',
-            'segundoApellido' => 'nullable'
+            'segundoApellido' => 'nullable',
+            'idiomas.*.idioma' => 'required',
+            'idiomas.*.nivel' => 'required',
         ]);
 
-        Postulante::create($request->all());
+        $postulante = Postulante::create($request->only([
+            'primerNombre',
+            'segundoNombre',
+            'primerApellido',
+            'segundoApellido'
+        ]));
+
+        if ($request->has('idiomas')) {
+            foreach ($request->input('idiomas') as $idiomaData) {
+                $postulante->idiomas()->create($idiomaData);
+            }
+        }
+
         return redirect()->route('postulantes.index');
     }
 
@@ -42,10 +57,51 @@ class PostulanteController extends Controller
             'primerNombre' => 'required',
             'segundoNombre' => 'nullable',
             'primerApellido' => 'required',
-            'segundoApellido' => 'nullable'
+            'segundoApellido' => 'nullable',
+            'idiomas.*.idioma' => 'required',
+            'idiomas.*.nivel' => 'required',
         ]);
 
-        $postulante->update($request->all());
+        $postulante->update($request->only([
+            'primerNombre',
+            'segundoNombre',
+            'primerApellido',
+            'segundoApellido',
+        ]));
+
+        $idsEnFormulario = [];
+
+        if ($request->has('idiomas')) {
+            foreach ($request->input('idiomas') as $idiomaData) {
+                if (isset($idiomaData['id'])) {
+                    // Actualizar idioma existente
+                    $idioma = Idioma::where('idIdioma', $idiomaData['id'])
+                                    ->where('postulante_id', $postulante->idPostulante)
+                                    ->first();
+    
+                    if ($idioma) {
+                        $idioma->update([
+                            'idioma' => $idiomaData['idioma'],
+                            'nivel' => $idiomaData['nivel'],
+                        ]);
+                        $idsEnFormulario[] = $idioma->idIdioma;
+                    }
+                } else {
+                    // Crear nuevo idioma
+                    $nuevo = $postulante->idiomas()->create([
+                        'idioma' => $idiomaData['idioma'],
+                        'nivel' => $idiomaData['nivel'],
+                    ]);
+                    $idsEnFormulario[] = $nuevo->idIdioma;
+                }
+            }
+        }
+    
+        // Eliminar idiomas que ya no están en el formulario
+        $postulante->idiomas()
+            ->whereNotIn('idIdioma', $idsEnFormulario)
+            ->delete();
+
         return redirect()->route('postulantes.index');
     }
 
