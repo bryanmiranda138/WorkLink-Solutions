@@ -18,4 +18,9 @@ class Postulante extends Model
     {
         return $this->hasMany(Idioma::class, 'postulante_id', 'idPostulante');
     }
+
+    public function habilidades()
+    {
+        return $this->hasMany(Habilidad::class, 'postulante_id', 'idPostulante');
+    }
 }
