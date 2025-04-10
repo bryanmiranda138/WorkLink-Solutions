@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Postulante;
 use App\Models\Idioma;
+use App\Models\Habilidad;
 use Illuminate\Http\Request;
 
 class PostulanteController extends Controller
@@ -28,6 +29,8 @@ class PostulanteController extends Controller
             'segundoApellido' => 'nullable',
             'idiomas.*.idioma' => 'required',
             'idiomas.*.nivel' => 'required',
+            'habilidades.*.habilidad' => 'required',
+            'habilidades.*.nivel' => 'required'
         ]);
 
         $postulante = Postulante::create($request->only([
@@ -40,6 +43,12 @@ class PostulanteController extends Controller
         if ($request->has('idiomas')) {
             foreach ($request->input('idiomas') as $idiomaData) {
                 $postulante->idiomas()->create($idiomaData);
+            }
+        }
+
+        if ($request->has('habilidades')) {
+            foreach ($request->input('habilidades') as $habilidadData) {
+                $postulante->habilidades()->create($habilidadData);
             }
         }
 
@@ -60,6 +69,8 @@ class PostulanteController extends Controller
             'segundoApellido' => 'nullable',
             'idiomas.*.idioma' => 'required',
             'idiomas.*.nivel' => 'required',
+            'habilidades.*.habilidad' => 'required',
+            'habilidades.*.nivel' => 'required'
         ]);
 
         $postulante->update($request->only([
@@ -96,11 +107,42 @@ class PostulanteController extends Controller
                 }
             }
         }
+
+        if ($request->has('habilidades')) {
+            foreach ($request->input('habilidades') as $habilidadData) {
+                if (isset($habilidadData['id'])) {
+                    // Actualizar habilidad existente
+                    $habilidad = Habilidad::where('idHabilidad', $habilidadData['id'])
+                                    ->where('postulante_id', $postulante->idPostulante)
+                                    ->first();
+    
+                    if ($habilidad) {
+                        $habilidad->update([
+                            'habilidad' => $habilidadData['habilidad'],
+                            'nivel' => $habilidadData['nivel'],
+                        ]);
+                        $idsEnFormulario[] = $habilidad->idHabilidad;
+                    }
+                } else {
+                    // Crear nueva habilidad
+                    $nuevo = $postulante->habilidades()->create([
+                        'habilidad' => $habilidadData['habilidad'],
+                        'nivel' => $habilidadData['nivel'],
+                    ]);
+                    $idsEnFormulario[] = $nuevo->idHabilidad;
+                }
+            }
+        }        
     
         // Eliminar idiomas que ya no están en el formulario
         $postulante->idiomas()
             ->whereNotIn('idIdioma', $idsEnFormulario)
             ->delete();
+
+        // Eliminar habilidades que ya no están en el formulario
+        $postulante->habilidades()
+            ->whereNotIn('idHabilidad', $idsEnFormulario)
+            ->delete();            
 
         return redirect()->route('postulantes.index');
     }

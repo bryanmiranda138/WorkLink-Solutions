@@ -47,6 +47,25 @@
 
         <button type="button" class="btn btn-secondary mb-3" id="add-idioma">Agregar idioma</button>
 
+        {{-- Habilidades --}}
+        <hr>
+        <h4>Habilidades</h4>
+        <div id="habilidades-container">
+            <div class="habilidad mb-3 border p-3 rounded">
+                <div class="mb-2">
+                    <label>Habilidad</label>
+                    <input type="text" name="habilidades[0][habilidad]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Nivel</label>
+                    <input type="text" name="habilidades[0][nivel]" class="form-control" required>
+                </div>
+                <button type="button" class="btn btn-danger btn-sm remove-habilidad">Eliminar</button>
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-secondary mb-3" id="add-habilidad">Agregar habilidad</button>        
+
         <div>
             <button type="submit" class="btn btn-primary">Guardar</button>
         </div>
@@ -55,6 +74,7 @@
 
 <script>
     let idiomaIndex = 1;
+    let habilidadIndex = 1;
 
     document.getElementById('add-idioma').addEventListener('click', function () {
         const container = document.getElementById('idiomas-container');
@@ -77,9 +97,35 @@
         idiomaIndex++;
     });
 
+    document.getElementById('add-habilidad').addEventListener('click', function () {
+        const container = document.getElementById('habilidades-container');
+
+        const habilidadHtml = `
+            <div class="habilidad mb-3 border p-3 rounded">
+                <div class="mb-2">
+                    <label>Habilidad</label>
+                    <input type="text" name="habilidades[${habilidadIndex}][habilidad]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Nivel</label>
+                    <input type="text" name="habilidades[${habilidadIndex}][nivel]" class="form-control" required>
+                </div>
+                <button type="button" class="btn btn-danger btn-sm remove-habilidad">Eliminar</button>
+            </div>
+        `;
+
+        container.insertAdjacentHTML('beforeend', habilidadHtml);
+        habilidadIndex++;
+    });    
+
     document.addEventListener('click', function (e) {
         if (e.target && e.target.classList.contains('remove-idioma')) {
             e.target.closest('.idioma').remove();
+        }
+    });
+    document.addEventListener('click', function (e) {
+        if (e.target && e.target.classList.contains('remove-habilidad')) {
+            e.target.closest('.habilidad').remove();
         }
     });
 </script>

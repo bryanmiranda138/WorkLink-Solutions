@@ -10,7 +10,7 @@ php artisan migrate:fresh
 ## Reversión de migración
 php artisan migrate:rollback
 
-## Crear modelos
+## Crear modelos con migración incluida
 php artisan make:model NombreEntidad -m
 
 ## Crear controlador de modelos

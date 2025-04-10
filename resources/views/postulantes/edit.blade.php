@@ -51,6 +51,28 @@
 
         <button type="button" class="btn btn-secondary mb-3" id="add-idioma">Agregar idioma</button>
 
+        {{-- Habilidades --}}
+        <hr>
+        <h4>Habilidades</h4>
+        <div id="habilidades-container">
+            @foreach ($postulante->habilidades as $index => $habilidad)
+                <div class="idioma mb-3 border p-3 rounded">
+                    <input type="hidden" name="habilidades[{{ $index }}][id]" value="{{ $habilidad->idHabilidad }}">
+                    <div class="mb-2">
+                        <label>Habilidad</label>
+                        <input type="text" name="habilidades[{{ $index }}][habilidad]" class="form-control" value="{{ $habilidad->habilidad }}" required>
+                    </div>
+                    <div class="mb-2">
+                        <label>Nivel</label>
+                        <input type="text" name="habilidades[{{ $index }}][nivel]" class="form-control" value="{{ $habilidad->nivel }}" required>
+                    </div>
+                    <button type="button" class="btn btn-danger btn-sm remove-habilidad">Eliminar</button>
+                </div>
+            @endforeach
+        </div>
+
+        <button type="button" class="btn btn-secondary mb-3" id="add-habilidad">Agregar habilidad</button>        
+
         <div>
             <button type="submit" class="btn btn-primary">Actualizar</button>
         </div>
@@ -59,6 +81,7 @@
 
 <script>
     let idiomaIndex = {{ $postulante->idiomas->count() }};
+    let habilidadIndex = {{ $postulante->habilidades->count() }};
 
     document.getElementById('add-idioma').addEventListener('click', function () {
         const container = document.getElementById('idiomas-container');
@@ -81,9 +104,36 @@
         idiomaIndex++;
     });
 
+    document.getElementById('add-habilidad').addEventListener('click', function () {
+        const container = document.getElementById('habilidades-container');
+
+        const habilidadHtml = `
+            <div class="habilidad mb-3 border p-3 rounded">
+                <div class="mb-2">
+                    <label>Habilidad</label>
+                    <input type="text" name="habilidades[${habilidadIndex}][habilidad]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Nivel</label>
+                    <input type="text" name="habilidades[${habilidadIndex}][nivel]" class="form-control" required>
+                </div>
+                <button type="button" class="btn btn-danger btn-sm remove-habilidad">Eliminar</button>
+            </div>
+        `;
+
+        container.insertAdjacentHTML('beforeend', habilidadHtml);
+        habilidadIndex++;
+    });
+
     document.addEventListener('click', function (e) {
         if (e.target && e.target.classList.contains('remove-idioma')) {
             e.target.closest('.idioma').remove();
+        }
+    });
+
+    document.addEventListener('click', function (e) {
+        if (e.target && e.target.classList.contains('remove-habilidad')) {
+            e.target.closest('.habilidad').remove();
         }
     });
 </script>
