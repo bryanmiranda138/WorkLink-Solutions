@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('habilidades', function (Blueprint $table) {
-            $table->id('idHabilidad');
-            $table->string('habilidad', 100);
-            $table->string('nivel', 25);
+        Schema::create('educaciones', function (Blueprint $table) {
+            $table->id('idEducacion');
+            $table->string('titulo', 50);
+            $table->string('institucion', 50);
+            $table->date('fechaInicio');
+            $table->date('fechaFin');
             $table->unsignedBigInteger('postulante_id');
             $table->timestamps();
 
@@ -34,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('habilidades');
+        Schema::dropIfExists('educaciones');
     }
 };

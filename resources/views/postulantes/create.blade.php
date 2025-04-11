@@ -66,6 +66,33 @@
 
         <button type="button" class="btn btn-secondary mb-3" id="add-habilidad">Agregar habilidad</button>        
 
+        {{-- Educaciones --}}
+        <hr>
+        <h4>Educaciones</h4>
+        <div id="educaciones-container">
+            <div class="educacion mb-3 border p-3 rounded">
+                <div class="mb-2">
+                    <label>Título</label>
+                    <input type="text" name="educaciones[0][titulo]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Institucion</label>
+                    <input type="text" name="educaciones[0][institucion]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Fecha de Inicio</label>
+                    <input type="date" name="educaciones[0][fechaInicio]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Fecha de Fin</label>
+                    <input type="date" name="educaciones[0][fechaFin]" class="form-control" required>
+                </div>                
+                <button type="button" class="btn btn-danger btn-sm remove-educacion">Eliminar</button>
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-secondary mb-3" id="add-educacion">Agregar educacion</button>        
+
         <div>
             <button type="submit" class="btn btn-primary">Guardar</button>
         </div>
@@ -75,6 +102,7 @@
 <script>
     let idiomaIndex = 1;
     let habilidadIndex = 1;
+    let educacionIndex = 1;
 
     document.getElementById('add-idioma').addEventListener('click', function () {
         const container = document.getElementById('idiomas-container');
@@ -118,6 +146,35 @@
         habilidadIndex++;
     });    
 
+    document.getElementById('add-educacion').addEventListener('click', function () {
+        const container = document.getElementById('educaciones-container');
+
+        const educacionHtml = `
+            <div class="educacion mb-3 border p-3 rounded">
+                <div class="mb-2">
+                    <label>Titulo</label>
+                    <input type="text" name="educaciones[${educacionIndex}][titulo]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Institucion</label>
+                    <input type="text" name="educaciones[${educacionIndex}][institucion]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Fecha de Inicio</label>
+                    <input type="date" name="educaciones[${educacionIndex}][fechaInicio]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Fecha de Fin</label>
+                    <input type="date" name="educaciones[${educacionIndex}][fechaFin]" class="form-control" required>
+                </div>                  
+                <button type="button" class="btn btn-danger btn-sm remove-educacion">Eliminar</button>
+            </div>
+        `;
+
+        container.insertAdjacentHTML('beforeend', educacionHtml);
+        educacionIndex++;
+    });    
+
     document.addEventListener('click', function (e) {
         if (e.target && e.target.classList.contains('remove-idioma')) {
             e.target.closest('.idioma').remove();
@@ -128,6 +185,11 @@
             e.target.closest('.habilidad').remove();
         }
     });
+    document.addEventListener('click', function (e) {
+        if (e.target && e.target.classList.contains('remove-educacion')) {
+            e.target.closest('.educacion').remove();
+        }
+    });    
 </script>
 @endsection
 

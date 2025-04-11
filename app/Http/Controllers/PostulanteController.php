@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Postulante;
 use App\Models\Idioma;
 use App\Models\Habilidad;
+use App\Models\Educacion;
 use Illuminate\Http\Request;
 
 class PostulanteController extends Controller
@@ -30,7 +31,11 @@ class PostulanteController extends Controller
             'idiomas.*.idioma' => 'required',
             'idiomas.*.nivel' => 'required',
             'habilidades.*.habilidad' => 'required',
-            'habilidades.*.nivel' => 'required'
+            'habilidades.*.nivel' => 'required',
+            'educaciones.*.titulo' => 'required',
+            'educaciones.*.institucion' => 'required',
+            'educaciones.*.fechaInicio' => 'required',
+            'educaciones.*.fechaFin' => 'required'
         ]);
 
         $postulante = Postulante::create($request->only([
@@ -52,6 +57,12 @@ class PostulanteController extends Controller
             }
         }
 
+        if ($request->has('educaciones')) {
+            foreach ($request->input('educaciones') as $educacionData) {
+                $postulante->educaciones()->create($educacionData);
+            }
+        }
+
         return redirect()->route('postulantes.index');
     }
 
@@ -70,7 +81,11 @@ class PostulanteController extends Controller
             'idiomas.*.idioma' => 'required',
             'idiomas.*.nivel' => 'required',
             'habilidades.*.habilidad' => 'required',
-            'habilidades.*.nivel' => 'required'
+            'habilidades.*.nivel' => 'required',
+            'educaciones.*.titulo' => 'required',
+            'educaciones.*.institucion' => 'required',
+            'educaciones.*.fechaInicio' => 'required',
+            'educaciones.*.fechaFin' => 'required'
         ]);
 
         $postulante->update($request->only([
@@ -132,7 +147,37 @@ class PostulanteController extends Controller
                     $idsEnFormulario[] = $nuevo->idHabilidad;
                 }
             }
-        }        
+        }
+        
+        if ($request->has('educaciones')) {
+            foreach ($request->input('educaciones') as $educacionData) {
+                if (isset($educacionData['id'])) {
+                    // Actualizar educacion existente
+                    $educacion = Educacion::where('idEducacion', $educacionData['id'])
+                                    ->where('postulante_id', $postulante->idPostulante)
+                                    ->first();
+    
+                    if ($educacion) {
+                        $educacion->update([
+                            'titulo' => $educacionData['titulo'],
+                            'institucion' => $educacionData['institucion'],
+                            'fechaInicio' => $educacionData['fechaInicio'],
+                            'fechaFin' => $educacionData['fechaFin']
+                        ]);
+                        $idsEnFormulario[] = $educacion->idEducacion;
+                    }
+                } else {
+                    // Crear nueva educacion
+                    $nuevo = $postulante->educaciones()->create([
+                        'titulo' => $educacionData['titulo'],
+                        'institucion' => $educacionData['institucion'],
+                        'fechaInicio' => $educacionData['fechaInicio'],
+                        'fechaFin' => $educacionData['fechaFin']
+                    ]);
+                    $idsEnFormulario[] = $nuevo->idEducacion;
+                }
+            }
+        }            
     
         // Eliminar idiomas que ya no están en el formulario
         $postulante->idiomas()
@@ -142,7 +187,12 @@ class PostulanteController extends Controller
         // Eliminar habilidades que ya no están en el formulario
         $postulante->habilidades()
             ->whereNotIn('idHabilidad', $idsEnFormulario)
-            ->delete();            
+            ->delete();  
+            
+        // Eliminar educaciones que ya no están en el formulario
+        $postulante->educaciones()
+            ->whereNotIn('idEducacion', $idsEnFormulario)
+            ->delete();             
 
         return redirect()->route('postulantes.index');
     }
