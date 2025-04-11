@@ -23,4 +23,9 @@ class Postulante extends Model
     {
         return $this->hasMany(Habilidad::class, 'postulante_id', 'idPostulante');
     }
+
+    public function educaciones()
+    {
+        return $this->hasMany(Educacion::class, 'postulante_id', 'idPostulante');
+    }
 }
