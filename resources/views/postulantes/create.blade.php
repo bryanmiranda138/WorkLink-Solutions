@@ -93,6 +93,37 @@
 
         <button type="button" class="btn btn-secondary mb-3" id="add-educacion">Agregar educacion</button>        
 
+        {{-- Experiencias --}}
+        <hr>
+        <h4>Experiencia</h4>
+        <div id="experiencias-container">
+            <div class="experiencia mb-3 border p-3 rounded">
+                <div class="mb-2">
+                    <label>Puesto ocupado</label>
+                    <input type="text" name="experiencias[0][puesto]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Empresa</label>
+                    <input type="text" name="experiencias[0][empresa]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Fecha de Inicio</label>
+                    <input type="date" name="experiencias[0][fechaInicio]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Fecha de Fin</label>
+                    <input type="date" name="experiencias[0][fechaFin]" class="form-control" required>
+                </div>   
+                <div class="mb-2">
+                    <label>Contacto de la empresa</label>
+                    <input type="text" name="experiencias[0][contactoEmpresa]" class="form-control">
+                </div>                             
+                <button type="button" class="btn btn-danger btn-sm remove-experiencias">Eliminar</button>
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-secondary mb-3" id="add-experiencia">Agregar experiencia</button>        
+
         <div>
             <button type="submit" class="btn btn-primary">Guardar</button>
         </div>
@@ -103,6 +134,7 @@
     let idiomaIndex = 1;
     let habilidadIndex = 1;
     let educacionIndex = 1;
+    let experienciaIndex = 1;
 
     document.getElementById('add-idioma').addEventListener('click', function () {
         const container = document.getElementById('idiomas-container');
@@ -173,7 +205,40 @@
 
         container.insertAdjacentHTML('beforeend', educacionHtml);
         educacionIndex++;
-    });    
+    });
+
+    document.getElementById('add-experiencia').addEventListener('click', function () {
+        const container = document.getElementById('experiencias-container');
+
+        const experienciaHtml = `
+            <div class="experiencia mb-3 border p-3 rounded">
+                <div class="mb-2">
+                    <label>Puesto ocupado</label>
+                    <input type="text" name="experiencias[${experienciaIndex}][puesto]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Empresa</label>
+                    <input type="text" name="experiencias[${experienciaIndex}][empresa]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Fecha de Inicio</label>
+                    <input type="date" name="experiencias[${experienciaIndex}][fechaInicio]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Fecha de Fin</label>
+                    <input type="date" name="experiencias[${experienciaIndex}][fechaFin]" class="form-control" required>
+                </div>   
+                <div class="mb-2">
+                    <label>Contacto de la empresa</label>
+                    <input type="text" name="experiencias[${experienciaIndex}][contactoEmpresa]" class="form-control">
+                </div>                             
+                <button type="button" class="btn btn-danger btn-sm remove-experiencias">Eliminar</button>
+            </div>
+        `;
+
+        container.insertAdjacentHTML('beforeend', experienciaHtml);
+        experienciaIndex++;
+    });         
 
     document.addEventListener('click', function (e) {
         if (e.target && e.target.classList.contains('remove-idioma')) {
@@ -189,7 +254,12 @@
         if (e.target && e.target.classList.contains('remove-educacion')) {
             e.target.closest('.educacion').remove();
         }
-    });    
+    });  
+    document.addEventListener('click', function (e) {
+        if (e.target && e.target.classList.contains('remove-experiencia')) {
+            e.target.closest('.experiencia').remove();
+        }
+    });  
 </script>
 @endsection
 
