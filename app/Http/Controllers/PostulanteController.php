@@ -6,6 +6,7 @@ use App\Models\Postulante;
 use App\Models\Idioma;
 use App\Models\Habilidad;
 use App\Models\Educacion;
+use App\Models\Experiencia;
 use Illuminate\Http\Request;
 
 class PostulanteController extends Controller
@@ -35,7 +36,12 @@ class PostulanteController extends Controller
             'educaciones.*.titulo' => 'required',
             'educaciones.*.institucion' => 'required',
             'educaciones.*.fechaInicio' => 'required',
-            'educaciones.*.fechaFin' => 'required'
+            'educaciones.*.fechaFin' => 'required',
+            'experiencias.*.puesto' => 'required',
+            'experiencias.*.empresa' => 'required',
+            'experiencias.*.fechaInicio' => 'required',
+            'experiencias.*.fechaFin' => 'required',
+            'experiencias.*.contactoEmpresa' => 'nullable'
         ]);
 
         $postulante = Postulante::create($request->only([
@@ -63,6 +69,12 @@ class PostulanteController extends Controller
             }
         }
 
+        if ($request->has('experiencias')) {
+            foreach ($request->input('experiencias') as $experienciaData) {
+                $postulante->experiencias()->create($experienciaData);
+            }
+        }
+
         return redirect()->route('postulantes.index');
     }
 
@@ -85,7 +97,12 @@ class PostulanteController extends Controller
             'educaciones.*.titulo' => 'required',
             'educaciones.*.institucion' => 'required',
             'educaciones.*.fechaInicio' => 'required',
-            'educaciones.*.fechaFin' => 'required'
+            'educaciones.*.fechaFin' => 'required',
+            'experiencias.*.puesto' => 'required',
+            'experiencias.*.empresa' => 'required',
+            'experiencias.*.fechaInicio' => 'required',
+            'experiencias.*.fechaFin' => 'required',
+            'experiencias.*.contactoEmpresa' => 'nullable'
         ]);
 
         $postulante->update($request->only([
@@ -177,7 +194,39 @@ class PostulanteController extends Controller
                     $idsEnFormulario[] = $nuevo->idEducacion;
                 }
             }
-        }            
+        }       
+        
+        if ($request->has('experiencias')) {
+            foreach ($request->input('experiencias') as $experienciaData) {
+                if (isset($experienciaData['id'])) {
+                    // Actualizar experiencia existente
+                    $experiencia = Experiencia::where('idExperiencia', $experienciaData['id'])
+                                    ->where('postulante_id', $postulante->idPostulante)
+                                    ->first();
+    
+                    if ($experiencia) {
+                        $experiencia->update([
+                            'puesto' => $experienciaData['puesto'],
+                            'empresa' => $experienciaData['empresa'],
+                            'fechaInicio' => $experienciaData['fechaInicio'],
+                            'fechaFin' => $experienciaData['fechaFin'],
+                            'contactoEmpresa' => $experienciaData['contactoEmpresa']
+                        ]);
+                        $idsEnFormulario[] = $experiencia->idExperiencia;
+                    }
+                } else {
+                    // Crear nueva experiencia
+                    $nuevo = $postulante->experiencias()->create([
+                        'puesto' => $experienciaData['puesto'],
+                        'empresa' => $experienciaData['empresa'],
+                        'fechaInicio' => $experienciaData['fechaInicio'],
+                        'fechaFin' => $experienciaData['fechaFin'],
+                        'contactoEmpresa' => $experienciaData['contactoEmpresa']
+                    ]);
+                    $idsEnFormulario[] = $nuevo->idExperiencia;
+                }
+            }
+        }        
     
         // Eliminar idiomas que ya no están en el formulario
         $postulante->idiomas()
@@ -192,6 +241,11 @@ class PostulanteController extends Controller
         // Eliminar educaciones que ya no están en el formulario
         $postulante->educaciones()
             ->whereNotIn('idEducacion', $idsEnFormulario)
+            ->delete();    
+            
+        // Eliminar experiencias que ya no están en el formulario
+        $postulante->experiencias()
+            ->whereNotIn('idExperiencia', $idsEnFormulario)
             ->delete();             
 
         return redirect()->route('postulantes.index');
