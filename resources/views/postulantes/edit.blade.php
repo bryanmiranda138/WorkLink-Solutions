@@ -167,6 +167,28 @@
 
         <button type="button" class="btn btn-secondary mb-3" id="add-certificacion">Agregar certificacion</button>
 
+        {{-- Logros --}}
+        <hr>
+        <h4>Logros</h4>
+        <div id="logros-container">
+            @foreach ($postulante->logros as $index => $logro)
+                <div class="logro mb-3 border p-3 rounded">
+                    <input type="hidden" name="logros[{{ $index }}][id]" value="{{ $logro->idLogro }}">
+                    <div class="mb-2">
+                        <label>Descripción del logro</label>
+                        <input type="text" name="logros[{{ $index }}][descLogro]" class="form-control" value="{{ $logro->descLogro }}" required>
+                    </div>
+                    <div class="mb-2">
+                        <label>Fecha de obtención del logro</label>
+                        <input type="date" name="logros[{{ $index }}][fechaLogro]" class="form-control" value="{{ $logro->fechaLogro }}" required>
+                    </div>                                         
+                    <button type="button" class="btn btn-danger btn-sm remove-logro">Eliminar</button>
+                </div>
+            @endforeach
+        </div>        
+
+        <button type="button" class="btn btn-secondary mb-3" id="add-logro">Agregar logro</button>
+
         <div>
             <button type="submit" class="btn btn-primary">Actualizar</button>
         </div>
@@ -179,6 +201,7 @@
     let educacionIndex = {{ $postulante->educaciones->count() }};
     let experienciaIndex = {{ $postulante->experiencias->count() }};
     let certificacionIndex = {{ $postulante->certificaciones->count() }};
+    let logroIndex = {{ $postulante->logros->count() }};
 
     document.getElementById('add-idioma').addEventListener('click', function () {
         const container = document.getElementById('idiomas-container');
@@ -313,6 +336,27 @@
         certificacionIndex++;
     });
 
+    document.getElementById('add-logro').addEventListener('click', function () {
+        const container = document.getElementById('logros-container');
+
+        const logroHtml = `
+            <div class="logro mb-3 border p-3 rounded">
+                <div class="mb-2">
+                    <label>Descripción del logro</label>
+                    <input type="text" name="logros[${logroIndex}][descLogro]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Fecha de obtención del logro</label>
+                    <input type="date" name="logros[${logroIndex}][fechaLogro]" class="form-control" required>
+                </div>                           
+                <button type="button" class="btn btn-danger btn-sm remove-logros">Eliminar</button>
+            </div>
+        `;
+
+        container.insertAdjacentHTML('beforeend', logroHtml);
+        logroIndex++;
+    });    
+
     document.addEventListener('click', function (e) {
         if (e.target && e.target.classList.contains('remove-idioma')) {
             e.target.closest('.idioma').remove();
@@ -341,7 +385,13 @@
         if (e.target && e.target.classList.contains('remove-certificacion')) {
             e.target.closest('.certificacion').remove();
         }
-    });     
+    });
+    
+    document.addEventListener('click', function (e) {
+        if (e.target && e.target.classList.contains('remove-logro')) {
+            e.target.closest('.logro').remove();
+        }
+    });
 </script>
 @endsection
 
