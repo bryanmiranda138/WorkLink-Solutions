@@ -7,6 +7,7 @@ use App\Models\Idioma;
 use App\Models\Habilidad;
 use App\Models\Educacion;
 use App\Models\Experiencia;
+use App\Models\Certificacion;
 use Illuminate\Http\Request;
 
 class PostulanteController extends Controller
@@ -41,7 +42,11 @@ class PostulanteController extends Controller
             'experiencias.*.empresa' => 'required',
             'experiencias.*.fechaInicio' => 'required',
             'experiencias.*.fechaFin' => 'required',
-            'experiencias.*.contactoEmpresa' => 'nullable'
+            'experiencias.*.contactoEmpresa' => 'nullable',
+            'certificaciones.*.nomCert' => 'required',
+            'certificaciones.*.institucion' => 'required',
+            'certificaciones.*.fechaInicio' => 'required',
+            'certificaciones.*.fechaFin' => 'required'
         ]);
 
         $postulante = Postulante::create($request->only([
@@ -75,6 +80,12 @@ class PostulanteController extends Controller
             }
         }
 
+        if ($request->has('certificaciones')) {
+            foreach ($request->input('certificaciones') as $certificacionData) {
+                $postulante->certificaciones()->create($certificacionData);
+            }
+        }
+
         return redirect()->route('postulantes.index');
     }
 
@@ -102,7 +113,11 @@ class PostulanteController extends Controller
             'experiencias.*.empresa' => 'required',
             'experiencias.*.fechaInicio' => 'required',
             'experiencias.*.fechaFin' => 'required',
-            'experiencias.*.contactoEmpresa' => 'nullable'
+            'experiencias.*.contactoEmpresa' => 'nullable',
+            'certificaciones.*.nomCert' => 'required',
+            'certificaciones.*.institucion' => 'required',
+            'certificaciones.*.fechaInicio' => 'required',
+            'certificaciones.*.fechaFin' => 'required'
         ]);
 
         $postulante->update($request->only([
@@ -226,6 +241,36 @@ class PostulanteController extends Controller
                     $idsEnFormulario[] = $nuevo->idExperiencia;
                 }
             }
+        } 
+        
+        if ($request->has('certificaciones')) {
+            foreach ($request->input('certificaciones') as $certificacionData) {
+                if (isset($certificacionData['id'])) {
+                    // Actualizar certificacion existente
+                    $certificacion = Certificacion::where('idCertificacion', $certificacionData['id'])
+                                    ->where('postulante_id', $postulante->idPostulante)
+                                    ->first();
+    
+                    if ($certificacion) {
+                        $certificacion->update([
+                            'nomCert' => $certificacionData['nomCert'],
+                            'institucion' => $certificacionData['institucion'],
+                            'fechaInicio' => $certificacionData['fechaInicio'],
+                            'fechaFin' => $certificacionData['fechaFin']
+                        ]);
+                        $idsEnFormulario[] = $certificacion->idCertificacion;
+                    }
+                } else {
+                    // Crear nueva certificacion
+                    $nuevo = $postulante->certificaciones()->create([
+                        'nomCert' => $certificacionData['nomCert'],
+                        'institucion' => $certificacionData['institucion'],
+                        'fechaInicio' => $certificacionData['fechaInicio'],
+                        'fechaFin' => $certificacionData['fechaFin']
+                    ]);
+                    $idsEnFormulario[] = $nuevo->idCertificacion;
+                }
+            }
         }        
     
         // Eliminar idiomas que ya no están en el formulario
@@ -246,7 +291,12 @@ class PostulanteController extends Controller
         // Eliminar experiencias que ya no están en el formulario
         $postulante->experiencias()
             ->whereNotIn('idExperiencia', $idsEnFormulario)
-            ->delete();             
+            ->delete();   
+            
+        // Eliminar certificaciones que ya no están en el formulario
+        $postulante->certificaciones()
+            ->whereNotIn('idCertificacion', $idsEnFormulario)
+            ->delete();              
 
         return redirect()->route('postulantes.index');
     }
