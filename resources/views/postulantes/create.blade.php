@@ -124,6 +124,33 @@
 
         <button type="button" class="btn btn-secondary mb-3" id="add-experiencia">Agregar experiencia</button>        
 
+        {{-- Certificaciones --}}
+        <hr>
+        <h4>Certificaciones</h4>
+        <div id="certificaciones-container">
+            <div class="certificacion mb-3 border p-3 rounded">
+                <div class="mb-2">
+                    <label>Nombre del certificado</label>
+                    <input type="text" name="certificaciones[0][nomCert]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Institución</label>
+                    <input type="text" name="certificaciones[0][institucion]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Fecha de Inicio</label>
+                    <input type="date" name="certificaciones[0][fechaInicio]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Fecha de Fin</label>
+                    <input type="date" name="certificaciones[0][fechaFin]" class="form-control" required>
+                </div>                              
+                <button type="button" class="btn btn-danger btn-sm remove-certificaciones">Eliminar</button>
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-secondary mb-3" id="add-certificacion">Agregar certificacion</button>     
+
         <div>
             <button type="submit" class="btn btn-primary">Guardar</button>
         </div>
@@ -135,6 +162,7 @@
     let habilidadIndex = 1;
     let educacionIndex = 1;
     let experienciaIndex = 1;
+    let certificacionIndex = 1;
 
     document.getElementById('add-idioma').addEventListener('click', function () {
         const container = document.getElementById('idiomas-container');
@@ -238,7 +266,36 @@
 
         container.insertAdjacentHTML('beforeend', experienciaHtml);
         experienciaIndex++;
-    });         
+    }); 
+
+    document.getElementById('add-certificacion').addEventListener('click', function () {
+        const container = document.getElementById('certificaciones-container');
+
+        const certificacionHtml = `
+            <div class="certificacion mb-3 border p-3 rounded">
+                <div class="mb-2">
+                    <label>Nombre del certificado</label>
+                    <input type="text" name="certificaciones[${certificacionIndex}][nomCert]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Institución</label>
+                    <input type="text" name="certificaciones[${certificacionIndex}][institucion]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Fecha de Inicio</label>
+                    <input type="date" name="certificaciones[${certificacionIndex}][fechaInicio]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Fecha de Fin</label>
+                    <input type="date" name="certificaciones[${certificacionIndex}][fechaFin]" class="form-control" required>
+                </div>                              
+                <button type="button" class="btn btn-danger btn-sm remove-certificaciones">Eliminar</button>
+            </div>
+        `;
+
+        container.insertAdjacentHTML('beforeend', certificacionHtml);
+        certificacionIndex++;
+    });             
 
     document.addEventListener('click', function (e) {
         if (e.target && e.target.classList.contains('remove-idioma')) {
@@ -259,7 +316,12 @@
         if (e.target && e.target.classList.contains('remove-experiencia')) {
             e.target.closest('.experiencia').remove();
         }
-    });  
+    }); 
+    document.addEventListener('click', function (e) {
+        if (e.target && e.target.classList.contains('remove-certificacion')) {
+            e.target.closest('.certificacion').remove();
+        }
+    });    
 </script>
 @endsection
 

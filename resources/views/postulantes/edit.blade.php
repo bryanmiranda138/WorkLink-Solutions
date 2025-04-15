@@ -137,6 +137,36 @@
 
         <button type="button" class="btn btn-secondary mb-3" id="add-experiencia">Agregar experiencia</button>
 
+        {{-- Certificaciones --}}
+        <hr>
+        <h4>Certificaciones</h4>
+        <div id="certificaciones-container">
+            @foreach ($postulante->certificaciones as $index => $certificacion)
+                <div class="certificacion mb-3 border p-3 rounded">
+                    <input type="hidden" name="certificaciones[{{ $index }}][id]" value="{{ $certificacion->idCertificacion }}">
+                    <div class="mb-2">
+                        <label>Nombre del certificado</label>
+                        <input type="text" name="certificaciones[{{ $index }}][nomCert]" class="form-control" value="{{ $certificacion->nomCert }}" required>
+                    </div>
+                    <div class="mb-2">
+                        <label>Institución</label>
+                        <input type="text" name="certificaciones[{{ $index }}][institucion]" class="form-control" value="{{ $certificacion->institucion }}" required>
+                    </div>
+                    <div class="mb-2">
+                        <label>Fecha de Inicio</label>
+                        <input type="date" name="certificaciones[{{ $index }}][fechaInicio]" class="form-control" value="{{ $certificacion->fechaInicio }}" required>
+                    </div>
+                    <div class="mb-2">
+                        <label>Fecha de Fin</label>
+                        <input type="date" name="certificaciones[{{ $index }}][fechaFin]" class="form-control" value="{{ $certificacion->fechaFin }}" required>
+                    </div>                                         
+                    <button type="button" class="btn btn-danger btn-sm remove-certificacion">Eliminar</button>
+                </div>
+            @endforeach
+        </div>        
+
+        <button type="button" class="btn btn-secondary mb-3" id="add-certificacion">Agregar certificacion</button>
+
         <div>
             <button type="submit" class="btn btn-primary">Actualizar</button>
         </div>
@@ -148,6 +178,7 @@
     let habilidadIndex = {{ $postulante->habilidades->count() }};
     let educacionIndex = {{ $postulante->educaciones->count() }};
     let experienciaIndex = {{ $postulante->experiencias->count() }};
+    let certificacionIndex = {{ $postulante->certificaciones->count() }};
 
     document.getElementById('add-idioma').addEventListener('click', function () {
         const container = document.getElementById('idiomas-container');
@@ -253,6 +284,35 @@
         experienciaIndex++;
     });    
 
+    document.getElementById('add-certificacion').addEventListener('click', function () {
+        const container = document.getElementById('certificaciones-container');
+
+        const certificacionHtml = `
+            <div class="certificacion mb-3 border p-3 rounded">
+                <div class="mb-2">
+                    <label>Nombre del certificado</label>
+                    <input type="text" name="certificaciones[${certificacionIndex}][nomCert]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Institución</label>
+                    <input type="text" name="certificaciones[${certificacionIndex}][institucion]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Fecha de Inicio</label>
+                    <input type="date" name="certificaciones[${certificacionIndex}][fechaInicio]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Fecha de Fin</label>
+                    <input type="date" name="certificaciones[${certificacionIndex}][fechaFin]" class="form-control" required>
+                </div>                              
+                <button type="button" class="btn btn-danger btn-sm remove-certificaciones">Eliminar</button>
+            </div>
+        `;
+
+        container.insertAdjacentHTML('beforeend', certificacionHtml);
+        certificacionIndex++;
+    });
+
     document.addEventListener('click', function (e) {
         if (e.target && e.target.classList.contains('remove-idioma')) {
             e.target.closest('.idioma').remove();
@@ -276,6 +336,12 @@
             e.target.closest('.experiencia').remove();
         }
     });    
+
+    document.addEventListener('click', function (e) {
+        if (e.target && e.target.classList.contains('remove-certificacion')) {
+            e.target.closest('.certificacion').remove();
+        }
+    });     
 </script>
 @endsection
 

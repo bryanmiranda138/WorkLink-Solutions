@@ -33,4 +33,9 @@ class Postulante extends Model
     {
         return $this->hasMany(Experiencia::class, 'postulante_id', 'idPostulante');
     }
+
+    public function certificaciones()
+    {
+        return $this->hasMany(Certificacion::class, 'postulante_id', 'idPostulante');
+    }
 }
