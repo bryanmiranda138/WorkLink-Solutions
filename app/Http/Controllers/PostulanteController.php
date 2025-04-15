@@ -8,6 +8,7 @@ use App\Models\Habilidad;
 use App\Models\Educacion;
 use App\Models\Experiencia;
 use App\Models\Certificacion;
+use App\Models\Logro;
 use Illuminate\Http\Request;
 
 class PostulanteController extends Controller
@@ -46,7 +47,9 @@ class PostulanteController extends Controller
             'certificaciones.*.nomCert' => 'required',
             'certificaciones.*.institucion' => 'required',
             'certificaciones.*.fechaInicio' => 'required',
-            'certificaciones.*.fechaFin' => 'required'
+            'certificaciones.*.fechaFin' => 'required',
+            'logros.*.descLogro' => 'required',
+            'logros.*.fechaLogro' => 'required'            
         ]);
 
         $postulante = Postulante::create($request->only([
@@ -86,6 +89,12 @@ class PostulanteController extends Controller
             }
         }
 
+        if ($request->has('logros')) {
+            foreach ($request->input('logros') as $logroData) {
+                $postulante->logros()->create($logroData);
+            }
+        }
+
         return redirect()->route('postulantes.index');
     }
 
@@ -117,7 +126,9 @@ class PostulanteController extends Controller
             'certificaciones.*.nomCert' => 'required',
             'certificaciones.*.institucion' => 'required',
             'certificaciones.*.fechaInicio' => 'required',
-            'certificaciones.*.fechaFin' => 'required'
+            'certificaciones.*.fechaFin' => 'required',
+            'logros.*.descLogro' => 'required',
+            'logros.*.fechaLogro' => 'required'
         ]);
 
         $postulante->update($request->only([
@@ -271,6 +282,32 @@ class PostulanteController extends Controller
                     $idsEnFormulario[] = $nuevo->idCertificacion;
                 }
             }
+        }
+        
+        if ($request->has('logros')) {
+            foreach ($request->input('logros') as $logroData) {
+                if (isset($logroData['id'])) {
+                    // Actualizar logro existente
+                    $logro = Logro::where('idLogro', $logroData['id'])
+                                    ->where('postulante_id', $postulante->idPostulante)
+                                    ->first();
+    
+                    if ($logro) {
+                        $logro->update([
+                            'descLogro' => $logroData['descLogro'],
+                            'fechaLogro' => $logroData['fechaLogro']
+                        ]);
+                        $idsEnFormulario[] = $logro->idLogro;
+                    }
+                } else {
+                    // Crear nuevo logro
+                    $nuevo = $postulante->logros()->create([
+                        'descLogro' => $logroData['descLogro'],
+                        'fechaLogro' => $logroData['fechaLogro']
+                    ]);
+                    $idsEnFormulario[] = $nuevo->idLogro;
+                }
+            }
         }        
     
         // Eliminar idiomas que ya no están en el formulario
@@ -296,7 +333,12 @@ class PostulanteController extends Controller
         // Eliminar certificaciones que ya no están en el formulario
         $postulante->certificaciones()
             ->whereNotIn('idCertificacion', $idsEnFormulario)
-            ->delete();              
+            ->delete();   
+            
+        // Eliminar logros que ya no están en el formulario
+        $postulante->logros()
+            ->whereNotIn('idLogro', $idsEnFormulario)
+            ->delete();             
 
         return redirect()->route('postulantes.index');
     }
