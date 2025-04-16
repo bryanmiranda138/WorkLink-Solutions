@@ -12,7 +12,8 @@ class Postulante extends Model
     protected $primaryKey = 'idPostulante'; 
     public $incrementing = true;
     protected $keyType = 'int';
-    protected $fillable = ['primerNombre', 'segundoNombre', 'primerApellido', 'segundoApellido'];
+    protected $fillable = ['dui', 'genero', 'fechaNacimiento', 'primerNombre', 'segundoNombre', 
+    'primerApellido', 'segundoApellido', 'numTelefono', 'email'];
 
     public function ubicacion__postulantes()
     {

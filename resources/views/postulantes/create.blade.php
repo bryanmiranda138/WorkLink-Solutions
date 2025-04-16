@@ -9,6 +9,25 @@
 
         {{-- Datos del postulante --}}
         <div class="mb-3">
+            <label for="dui" class="form-label">DUI</label>
+            <input type="text" name="dui" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="genero" class="form-label">Género</label>
+            <select name="genero" id="genero" class="form-select" required>
+                <option value="">Seleccione una opción</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="fechaNacimiento" class="form-label">Fecha de nacimiento</label>
+            <input type="date" name="fechaNacimiento" id="fechaNacimiento" class="form-control" required>
+        </div>
+      
+        <div class="mb-3">
             <label for="primerNombre" class="form-label">Primer Nombre</label>
             <input type="text" name="primerNombre" class="form-control" required>
         </div>
@@ -26,6 +45,16 @@
         <div class="mb-3">
             <label for="segundoApellido" class="form-label">Segundo Apellido</label>
             <input type="text" name="segundoApellido" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label for="numTelefono" class="form-label">Número de teléfono</label>
+            <input type="text" name="numTelefono" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Correo electrónico</label>
+            <input type="text" name="email" class="form-control" required>
         </div>
 
         {{-- Ubicaciones --}}

@@ -28,10 +28,15 @@ class PostulanteController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'dui' => 'required',
+            'genero' => 'required',
+            'fechaNacimiento' => 'required',            
             'primerNombre' => 'required',
             'segundoNombre' => 'nullable',
             'primerApellido' => 'required',
             'segundoApellido' => 'nullable',
+            'numTelefono' => 'required',
+            'email' => 'required',
             'idiomas.*.idioma' => 'required',
             'idiomas.*.nivel' => 'required',
             'habilidades.*.habilidad' => 'required',
@@ -57,10 +62,15 @@ class PostulanteController extends Controller
         ]);
 
         $postulante = Postulante::create($request->only([
+            'dui',
+            'genero',
+            'fechaNacimiento', 
             'primerNombre',
             'segundoNombre',
             'primerApellido',
-            'segundoApellido'
+            'segundoApellido',
+            'numTelefono',
+            'email'
         ]));
 
         if ($request->has('ubicacion__postulantes')) {
@@ -116,10 +126,15 @@ class PostulanteController extends Controller
     public function update(Request $request, Postulante $postulante)
     {
         $request->validate([
+            'dui' => 'required',
+            'genero' => 'required',
+            'fechaNacimiento' => 'required',            
             'primerNombre' => 'required',
             'segundoNombre' => 'nullable',
             'primerApellido' => 'required',
             'segundoApellido' => 'nullable',
+            'numTelefono' => 'required',
+            'email' => 'required',
             'idiomas.*.idioma' => 'required',
             'idiomas.*.nivel' => 'required',
             'habilidades.*.habilidad' => 'required',
@@ -145,10 +160,15 @@ class PostulanteController extends Controller
         ]);
 
         $postulante->update($request->only([
+            'dui',
+            'genero',
+            'fechaNacimiento', 
             'primerNombre',
             'segundoNombre',
             'primerApellido',
             'segundoApellido',
+            'numTelefono',
+            'email'
         ]));
 
         $idsEnFormulario = [];
