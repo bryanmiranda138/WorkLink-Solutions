@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Postulante;
+use App\Models\Ubicacion_Postulante;
 use App\Models\Idioma;
 use App\Models\Habilidad;
 use App\Models\Educacion;
@@ -49,7 +50,10 @@ class PostulanteController extends Controller
             'certificaciones.*.fechaInicio' => 'required',
             'certificaciones.*.fechaFin' => 'required',
             'logros.*.descLogro' => 'required',
-            'logros.*.fechaLogro' => 'required'            
+            'logros.*.fechaLogro' => 'required',
+            'ubicacion__postulantes.*.nomDepartamento' => 'required',   
+            'ubicacion__postulantes.*.nomMunicipio' => 'required', 
+            'ubicacion__postulantes.*.direccion' => 'required'     
         ]);
 
         $postulante = Postulante::create($request->only([
@@ -58,6 +62,12 @@ class PostulanteController extends Controller
             'primerApellido',
             'segundoApellido'
         ]));
+
+        if ($request->has('ubicacion__postulantes')) {
+            foreach ($request->input('ubicacion__postulantes') as $ubicacion_postulanteData) {
+                $postulante->ubicacion__postulantes()->create($ubicacion_postulanteData);
+            }
+        }
 
         if ($request->has('idiomas')) {
             foreach ($request->input('idiomas') as $idiomaData) {
@@ -128,7 +138,10 @@ class PostulanteController extends Controller
             'certificaciones.*.fechaInicio' => 'required',
             'certificaciones.*.fechaFin' => 'required',
             'logros.*.descLogro' => 'required',
-            'logros.*.fechaLogro' => 'required'
+            'logros.*.fechaLogro' => 'required',
+            'ubicacion__postulantes.*.nomDepartamento' => 'required',   
+            'ubicacion__postulantes.*.nomMunicipio' => 'required', 
+            'ubicacion__postulantes.*.direccion' => 'required'
         ]);
 
         $postulante->update($request->only([
@@ -139,6 +152,34 @@ class PostulanteController extends Controller
         ]));
 
         $idsEnFormulario = [];
+
+        if ($request->has('ubicacion__postulantes')) {
+            foreach ($request->input('ubicacion__postulantes') as $ubicacion_postulanteData) {
+                if (isset($ubicacion_postulanteData['id'])) {
+                    // Actualizar ubicaciones existente
+                    $ubicacion_postulante = Ubicacion_Postulante::where('idUbicacionPostulante', $ubicacion_postulanteData['id'])
+                                    ->where('postulante_id', $postulante->idPostulante)
+                                    ->first();
+    
+                    if ($ubicacion_postulante) {
+                        $ubicacion_postulante->update([
+                            'nomDepartamento' => $ubicacion_postulanteData['nomDepartamento'],
+                            'nomMunicipio' => $ubicacion_postulanteData['nomMunicipio'],
+                            'direccion' => $ubicacion_postulanteData['direccion']
+                        ]);
+                        $idsEnFormulario[] = $ubicacion_postulante->idUbicacionPostulante;
+                    }
+                } else {
+                    // Crear nueva ubicacion
+                    $nuevo = $postulante->ubicacion__postulantes()->create([
+                        'nomDepartamento' => $ubicacion_postulanteData['nomDepartamento'],
+                        'nomMunicipio' => $ubicacion_postulanteData['nomMunicipio'],
+                        'direccion' => $ubicacion_postulanteData['direccion']
+                    ]);
+                    $idsEnFormulario[] = $nuevo->idUbicacionPostulante;
+                }
+            }
+        }
 
         if ($request->has('idiomas')) {
             foreach ($request->input('idiomas') as $idiomaData) {
@@ -309,7 +350,12 @@ class PostulanteController extends Controller
                 }
             }
         }        
-    
+
+        // Eliminar ubicaciones que ya no están en el formulario
+        $postulante->ubicacion__postulantes()
+            ->whereNotIn('idUbicacionPostulante', $idsEnFormulario)
+            ->delete();        
+        
         // Eliminar idiomas que ya no están en el formulario
         $postulante->idiomas()
             ->whereNotIn('idIdioma', $idsEnFormulario)

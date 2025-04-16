@@ -29,6 +29,32 @@
             <input type="text" name="segundoApellido" class="form-control" value="{{ $postulante->segundoApellido }}">
         </div>
 
+        {{-- Ubicación --}}
+        <hr>
+        <h4>Ubicación</h4>
+        <div id="ubicacion__postulantes-container">
+            @foreach ($postulante->ubicacion__postulantes as $index => $ubicacion_postulante)
+                <div class="ubicacion_postulante mb-3 border p-3 rounded">
+                    <input type="hidden" name="ubicacion__postulantes[{{ $index }}][id]" value="{{ $ubicacion_postulante->idUbicacionPostulante }}">
+                    <div class="mb-2">
+                        <label>Departamento</label>
+                        <input type="text" name="ubicacion__postulantes[{{ $index }}][nomDepartamento]" class="form-control" value="{{ $ubicacion_postulante->nomDepartamento }}" required>
+                    </div>
+                    <div class="mb-2">
+                        <label>Municipio</label>
+                        <input type="text" name="ubicacion__postulantes[{{ $index }}][nomMunicipio]" class="form-control" value="{{ $ubicacion_postulante->nomMunicipio }}" required>
+                    </div>
+                    <div class="mb-2">
+                        <label>Dirección</label>
+                        <input type="text" name="ubicacion__postulantes[{{ $index }}][direccion]" class="form-control" value="{{ $ubicacion_postulante->direccion }}" required>
+                    </div>                    
+                    <button type="button" class="btn btn-danger btn-sm remove-ubicacion_postulante">Eliminar</button>
+                </div>
+            @endforeach
+        </div>
+
+        <button type="button" class="btn btn-secondary mb-3" id="add-ubicacion_postulante">Agregar ubicación</button>
+
         {{-- Idiomas --}}
         <hr>
         <h4>Idiomas</h4>
@@ -196,12 +222,39 @@
 </div>
 
 <script>
+    let ubicacion_postulanteIndex = {{ $postulante->ubicacion__postulantes->count() }};
     let idiomaIndex = {{ $postulante->idiomas->count() }};
     let habilidadIndex = {{ $postulante->habilidades->count() }};
     let educacionIndex = {{ $postulante->educaciones->count() }};
     let experienciaIndex = {{ $postulante->experiencias->count() }};
     let certificacionIndex = {{ $postulante->certificaciones->count() }};
     let logroIndex = {{ $postulante->logros->count() }};
+
+    document.getElementById('add-ubicacion_postulante').addEventListener('click', function () {
+        const container = document.getElementById('ubicacion__postulantes-container');
+
+        const ubicacion_postulanteHtml = `
+            <div class="ubicacion_postulante mb-3 border p-3 rounded">
+                <div class="mb-2">
+                    <label>Departamento</label>
+                    <input type="text" name="ubicacion__postulantes[${ubicacion_postulanteIndex}][nomDepartamento]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Municipio</label>
+                    <input type="text" name="ubicacion__postulantes[${ubicacion_postulanteIndex}][nomMunicipio]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Dirección</label>
+                    <input type="text" name="ubicacion__postulantes[${ubicacion_postulanteIndex}][direccion]" class="form-control" required>
+                </div>
+                <button type="button" class="btn btn-danger btn-sm remove-ubicacion_postulante">Eliminar</button>
+            </div>
+        `;
+
+        container.insertAdjacentHTML('beforeend', ubicacion_postulanteHtml);
+        ubicacion_postulanteIndex++;
+    });
+
 
     document.getElementById('add-idioma').addEventListener('click', function () {
         const container = document.getElementById('idiomas-container');
@@ -356,6 +409,12 @@
         container.insertAdjacentHTML('beforeend', logroHtml);
         logroIndex++;
     });    
+
+    document.addEventListener('click', function (e) {
+        if (e.target && e.target.classList.contains('remove-ubicacion_postulante')) {
+            e.target.closest('.ubicacion_postulante').remove();
+        }
+    });
 
     document.addEventListener('click', function (e) {
         if (e.target && e.target.classList.contains('remove-idioma')) {
