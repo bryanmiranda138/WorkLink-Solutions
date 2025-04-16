@@ -14,6 +14,11 @@ class Postulante extends Model
     protected $keyType = 'int';
     protected $fillable = ['primerNombre', 'segundoNombre', 'primerApellido', 'segundoApellido'];
 
+    public function ubicacion__postulantes()
+    {
+        return $this->hasMany(Ubicacion_Postulante::class, 'postulante_id', 'idPostulante');
+    }
+
     public function idiomas()
     {
         return $this->hasMany(Idioma::class, 'postulante_id', 'idPostulante');

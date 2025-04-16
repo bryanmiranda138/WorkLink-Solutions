@@ -28,6 +28,29 @@
             <input type="text" name="segundoApellido" class="form-control">
         </div>
 
+        {{-- Ubicaciones --}}
+        <hr>
+        <h4>Ubicaciones</h4>
+        <div id="ubicacion__postulantes-container">
+            <div class="ubicacion_postulante mb-3 border p-3 rounded">
+                <div class="mb-2">
+                    <label>Departamento</label>
+                    <input type="text" name="ubicacion__postulantes[0][nomDepartamento]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Municipio</label>
+                    <input type="text" name="ubicacion__postulantes[0][nomMunicipio]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Dirección</label>
+                    <input type="text" name="ubicacion__postulantes[0][direccion]" class="form-control" required>
+                </div>
+                <button type="button" class="btn btn-danger btn-sm remove-ubicacion_postulante">Eliminar</button>
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-secondary mb-3" id="add-ubicacion_postulante">Agregar Ubicación</button>
+
         {{-- Idiomas --}}
         <hr>
         <h4>Idiomas</h4>
@@ -177,12 +200,38 @@
 </div>
 
 <script>
+    let ubicacion_postulanteIndex = 1;
     let idiomaIndex = 1;
     let habilidadIndex = 1;
     let educacionIndex = 1;
     let experienciaIndex = 1;
     let certificacionIndex = 1;
     let logroIndex = 1;
+
+    document.getElementById('add-ubicacion_postulante').addEventListener('click', function () {
+        const container = document.getElementById('ubicacion__postulantes-container');
+
+        const ubicacion_postulanteHtml = `
+            <div class="ubicacion_postulante mb-3 border p-3 rounded">
+                <div class="mb-2">
+                    <label>Departamento</label>
+                    <input type="text" name="ubicacion__postulantes[${ubicacion_postulanteIndex}][nomDepartamento]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Municipio</label>
+                    <input type="text" name="ubicacion__postulantes[${ubicacion_postulanteIndex}][nomMunicipio]" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label>Dirección</label>
+                    <input type="text" name="ubicacion__postulantes[${ubicacion_postulanteIndex}][direccion]" class="form-control" required>
+                </div>
+                <button type="button" class="btn btn-danger btn-sm remove-ubicacion_postulante">Eliminar</button>
+            </div>
+        `;
+
+        container.insertAdjacentHTML('beforeend', ubicacion_postulanteHtml);
+        ubicacion_postulanteIndex++;
+    });
 
     document.getElementById('add-idioma').addEventListener('click', function () {
         const container = document.getElementById('idiomas-container');
@@ -338,6 +387,11 @@
         logroIndex++;
     });                
 
+    document.addEventListener('click', function (e) {
+        if (e.target && e.target.classList.contains('remove-ubicacion_postulante')) {
+            e.target.closest('.ubicacion_postulante').remove();
+        }
+    });
     document.addEventListener('click', function (e) {
         if (e.target && e.target.classList.contains('remove-idioma')) {
             e.target.closest('.idioma').remove();
