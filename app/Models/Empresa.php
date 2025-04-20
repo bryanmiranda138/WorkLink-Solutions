@@ -14,4 +14,9 @@ class Empresa extends Model
     public $incrementing = true;
     protected $keyType = 'int';
     protected $fillable = ['nomEmpresa', 'sector', 'email', 'telefono'];
+
+    public function ubicacion__empresas()
+    {
+        return $this->hasMany(Ubicacion_Empresa::class, 'empresa_id', 'idEmpresa');
+    }
 }

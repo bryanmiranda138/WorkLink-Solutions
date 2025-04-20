@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empresa;
+use App\Models\Ubicacion_Empresa;
 use Illuminate\Http\Request;
 
 class EmpresaController extends Controller
@@ -24,7 +25,10 @@ class EmpresaController extends Controller
             'nomEmpresa' => 'required',
             'sector' => 'required',
             'email' => 'required', 
-            'telefono' => 'required'              
+            'telefono' => 'required',
+            'ubicacion__empresas.*.nomDepartamento' => 'required',   
+            'ubicacion__empresas.*.nomMunicipio' => 'required', 
+            'ubicacion__empresas.*.direccion' => 'required'              
         ]);
 
         $empresa = Empresa::create($request->only([
@@ -33,6 +37,12 @@ class EmpresaController extends Controller
             'email', 
             'telefono'
         ]));
+
+        if ($request->has('ubicacion__empresas')) {
+            foreach ($request->input('ubicacion__empresas') as $ubicacion_empresaData) {
+                $empresa->ubicacion__empresas()->create($ubicacion_empresaData);
+            }
+        }
 
         return redirect()->route('empresas.index');
     }
@@ -48,7 +58,10 @@ class EmpresaController extends Controller
             'nomEmpresa' => 'required',
             'sector' => 'required',
             'email' => 'required', 
-            'telefono' => 'required'  
+            'telefono' => 'required',
+            'ubicacion__empresas.*.nomDepartamento' => 'required',   
+            'ubicacion__empresas.*.nomMunicipio' => 'required', 
+            'ubicacion__empresas.*.direccion' => 'required'    
         ]);
 
         $empresa->update($request->only([
@@ -57,6 +70,41 @@ class EmpresaController extends Controller
             'email', 
             'telefono'
         ]));
+
+        $idsEnFormulario = [];
+
+        if ($request->has('ubicacion__empresas')) {
+            foreach ($request->input('ubicacion__empresas') as $ubicacion_empresaData) {
+                if (isset($ubicacion_empresaData['id'])) {
+                    // Actualizar ubicaciones existente
+                    $ubicacion_empresa = Ubicacion_Empresa::where('idUbicacionEmpresa', $ubicacion_empresaData['id'])
+                                    ->where('empresa_id', $empresa->idEmpresa)
+                                    ->first();
+    
+                    if ($ubicacion_empresa) {
+                        $ubicacion_empresa->update([
+                            'nomDepartamento' => $ubicacion_empresaData['nomDepartamento'],
+                            'nomMunicipio' => $ubicacion_empresaData['nomMunicipio'],
+                            'direccion' => $ubicacion_empresaData['direccion']
+                        ]);
+                        $idsEnFormulario[] = $ubicacion_empresa->idUbicacionEmpresa;
+                    }
+                } else {
+                    // Crear nueva ubicacion
+                    $nuevo = $empresa->ubicacion__empresas()->create([
+                        'nomDepartamento' => $ubicacion_empresaData['nomDepartamento'],
+                        'nomMunicipio' => $ubicacion_empresaData['nomMunicipio'],
+                        'direccion' => $ubicacion_empresaData['direccion']
+                    ]);
+                    $idsEnFormulario[] = $nuevo->idUbicacionEmpresa;
+                }
+            }
+        }
+
+        // Eliminar ubicaciones que ya no están en el formulario
+        $empresa->ubicacion__empresas()
+            ->whereNotIn('idUbicacionEmpresa', $idsEnFormulario)
+            ->delete();          
 
         return redirect()->route('empresas.index');
     }
