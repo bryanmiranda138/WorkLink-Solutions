@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostulanteController;
+use App\Http\Controllers\EmpresaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,14 +15,18 @@ use App\Http\Controllers\PostulanteController;
 |
 */
 
-/*
 Route::get('/', function () {
     return view('welcome');
 });
-*/
 
-Route::get('/', function () {
+Route::get('/postulante', function () {
     return redirect()->route('postulantes.index');
 });
 
 Route::resource('postulantes', PostulanteController::class);
+
+Route::get('/empresa', function () {
+    return redirect()->route('empresas.index');
+});
+
+Route::resource('empresas', EmpresaController::class);
