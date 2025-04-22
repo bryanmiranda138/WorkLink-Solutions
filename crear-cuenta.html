@@ -1,0 +1,265 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Jober Desk | Responsive Job Portal Template</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- All Plugin Css -->
+    <link rel="stylesheet" href="css/plugins.css">
+
+    <!-- Style & Common Css -->
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/main.css">
+
+</head>
+
+<body>
+
+    <!-- Navigation Start  -->
+    <nav class="navbar navbar-default navbar-sticky bootsnav">
+
+        <div class="container">
+            <!-- Start Header Navigation -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="index.html"><img src="img/logowork2.png"
+                        style="border-radius: 50%;width: 140px; height: 90px;" class="logo" alt=""></a>
+            </div>
+            <!-- End Header Navigation -->
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navbar-menu">
+                <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="login.html">Iniciar sesión</a></li>
+                    <li><a href="companies.html">Empresas</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Buscar</a>
+                        <ul class="dropdown-menu animated fadeOutUp" style="display: none; opacity: 1;">
+                            <li class="active"><a href="browse-job.html">Buscar Trabajos</a></li>
+                            <li><a href="company-detail.html">Detalle Empresa</a></li>
+                            <li><a href="resume.html">Mi Perfil</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div>
+    </nav>
+    <!-- Navigation End  -->
+
+    <!-- login section start -->
+    <section class="login-wrapper">
+        <div class="container">
+            <div class="col-md-6 col-sm-8 col-md-offset-3 col-sm-offset-2">
+                <form>
+                    <img class="img-responsive" alt="logo" src="img/logowork2.png" style="border-radius: 75%;">
+                    <input type="text" class="form-control input-lg" placeholder="Primer Nombre">
+                    <input type="text" class="form-control input-lg" placeholder="Segundo Nombre">
+                    <input type="text" class="form-control input-lg" placeholder="Primer Apellido">
+                    <input type="text" class="form-control input-lg" placeholder="Segundo Apellido">
+                    <input type="number" class="form-control input-lg" placeholder="DUI">
+                    <input type="number" class="form-control input-lg" placeholder="NIT">
+                    <div class="form-group">
+                        <label for="genero">Género:</label>
+                        <select id="genero" name="genero" class="form-control input-lg">
+                            <option value="" disabled selected>Seleccione una opción</option>
+                            <option value="Femenino">Femenino</option>
+                            <option value="Masculino">Masculino</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="departamento" class="form-label">Departamento:</label>
+                        <select id="departamento" class="form-control"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="municipio" class="form-label">Municipio:</label>
+                        <select id="municipio" class="form-control"></select>
+                    </div>
+                    <input type="date" class="form-control input-lg" placeholder="Fecha de Nacimiento">
+                    <input type="number" class="form-control input-lg" placeholder="Teléfono">
+                    <input type="email" class="form-control input-lg" placeholder="Email">
+                    <input type="password" class="form-control input-lg" placeholder="Contraseña">
+                    <input type="password" class="form-control input-lg" placeholder="Repetir Contraseña">
+                    <br>
+                    <label id="idExperiencia">Experiencia:</label>
+                    <input type="text" class="form-control input-lg" placeholder="Puesto">
+                    <input type="text" class="form-control input-lg" placeholder="Empresa">
+                    <input type="date" class="form-control input-lg" placeholder="Fecha de Inicio">
+                    <input type="date" class="form-control input-lg" placeholder="Fecha de Finalización">
+                    <input type="number" class="form-control input-lg" placeholder="N° de contacto">
+                    <br>
+                    <label id="idEducacion">Educación:</label>
+                    <input type="text" class="form-control input-lg" placeholder="Institución">
+                    <input type="text" class="form-control input-lg" placeholder="Titulo">
+                    <input type="text" class="form-control input-lg" placeholder="Tipo">
+                    <input type="date" class="form-control input-lg" placeholder="Fecha de Inicio">
+                    <input type="date" class="form-control input-lg" placeholder="Fecha de Finalización">
+                    <br>
+                    <b><label id="idHabilidad" style="text-align: center;">Habilidades</label></b>
+                    <br>
+                    <label id="idHabilidad">Habilidad:</label>
+                    <input type="text" class="form-control input-lg" placeholder="Habilidad">
+                    <div class="form-group">
+                        <label for="genero">Nivel:</label>
+                        <select id="genero" name="genero" class="form-control input-lg">
+                            <option value="" disabled selected>Seleccione una opción</option>
+                            <option value="Básico">Básico</option>
+                            <option value="Intermedio">Intermedio</option>
+                            <option value="Avanzdo">Avanzado</option>
+                        </select>
+                    </div>
+                    <br>
+                    <label id="idIdioma">Idioma:</label>
+                    <input type="text" class="form-control input-lg" placeholder="Idioma">
+                    <div class="form-group">
+                        <label for="genero">Nivel:</label>
+                        <select id="genero" name="genero" class="form-control input-lg">
+                            <option value="" disabled selected>Seleccione una opción</option>
+                            <option value="Básico">Básico</option>
+                            <option value="Intermedio">Intermedio</option>
+                            <option value="Avanzdo">Avanzado</option>
+                        </select>
+                    </div>
+                    <br>
+                    <label id="idCertificacion">Certificación:</label>
+                    <input type="text" class="form-control input-lg" placeholder="Tipo de Certificacion">
+                    <input type="text" class="form-control input-lg" placeholder="Nombre de la Certificación">
+                    <input type="text" class="form-control input-lg" placeholder="Institución">
+                    <input type="date" class="form-control input-lg" placeholder="Fecha de Inicio">
+                    <input type="date" class="form-control input-lg" placeholder="Fecha de Finalización">
+                    <br>
+                    
+                    <button type="submit" class="btn btn-primary">Registrarse</button>
+
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- login section End -->
+    <script>const departamentosMunicipios = {
+            "AHUACHAPÁN": ["AHUACHAPÁN NORTE", "AHUACHAPÁN CENTRO", "AHUACHAPÁN SUR"],
+            "SANTA ANA": ["SANTA ANA NORTE", "SANTA ANA CENTRO", "SANTA ANA OESTE", "SANTA ANA ESTE"],
+            "SONSONATE": ["SONSONATE NORTE", "SONSONATE CENTRO", "SONSONATE ESTE", "SONSONATE OESTE"],
+            "CHALATENANGO": ["CHALATENANGO NORTE", "CHALATENANGO CENTRO", "CHALATENANGO SUR"],
+            "LA LIBERTAD": ["LA LIBERTAD NORTE", "LA LIBERTAD CENTRO", "LA LIBERTAD OESTE", "LA LIBERTAD ESTE", "LA LIBERTAD COSTA", "LA LIBERTAD SUR"],
+            "SAN SALVADOR": ["SAN SALVADOR NORTE", "SAN SALVADOR OESTE", "SAN SALVADOR ESTE", "SAN SALVADOR CENTRO", "SAN SALVADOR SUR"],
+            "CUSCATLÁN": ["CUSCATLÁN NORTE", "CUSCATLÁN SUR"],
+            "LA PAZ": ["LA PAZ OESTE", "LA PAZ CENTRO", "LA PAZ ESTE"],
+            "CABAÑAS": ["CABAÑAS ESTE", "CABAÑAS OESTE"],
+            "SAN VICENTE": ["SAN VICENTE NORTE", "SAN VICENTE SUR"],
+            "USULUTÁN": ["USULUTÁN NORTE", "USULUTÁN ESTE", "USULUTÁN OESTE"],
+            "SAN MIGUEL": ["SAN MIGUEL NORTE", "SAN MIGUEL CENTRO", "SAN MIGUEL OESTE"],
+            "MORAZÁN": ["MORAZÁN NORTE", "MORAZÁN SUR"],
+            "LA UNIÓN": ["LA UNIÓN NORTE", "LA UNIÓN SUR"]
+        };
+
+        const departamentoSelect = document.getElementById("departamento");
+        const municipioSelect = document.getElementById("municipio");
+
+        // Llena el selector de departamentos
+        for (const departamento in departamentosMunicipios) {
+            const option = document.createElement("option");
+            option.value = departamento;
+            option.text = departamento;
+            departamentoSelect.appendChild(option);
+        }
+
+        // Función para actualizar los municipios al cambiar el departamento
+        function actualizarMunicipios() {
+            const departamentoSeleccionado = departamentoSelect.value;
+            const municipios = departamentosMunicipios[departamentoSeleccionado];
+
+            // Limpia el selector de municipios
+            municipioSelect.innerHTML = "";
+
+            // Llena el selector de municipios con los municipios del departamento seleccionado
+            if (municipios) {
+                municipios.forEach(municipio => {
+                    const option = document.createElement("option");
+                    option.value = municipio;
+                    option.text = municipio;
+                    municipioSelect.appendChild(option);
+                });
+            }
+        }
+
+        // Llama a la función para inicializar los municipios al cargar la página
+        actualizarMunicipios();
+
+        // Agrega un evento change al selector de departamentos
+        departamentoSelect.addEventListener("change", actualizarMunicipios);</script>
+    <!-- footer start -->
+    <footer>
+        <div class="container">
+            <!-- <div class="col-md-3 col-sm-6">
+					<h4>Featured Job</h4>
+					<ul>
+						<li><a href="#">Browse Jobs</a></li>
+						<li><a href="#">Premium MBA Jobs</a></li>
+						<li><a href="#">Access Database</a></li>
+						<li><a href="#">Manage Responses</a></li>
+						<li><a href="#">Report a Problem</a></li>
+						<li><a href="#">Mobile Site</a></li>
+						<li><a href="#">Jobs by Skill</a></li>
+					</ul>
+				</div> -->
+
+            <!-- <div class="col-md-3 col-sm-6">
+					<h4>Latest Job</h4>
+					<ul>
+						<li><a href="#">Browse Jobs</a></li>
+						<li><a href="#">Premium MBA Jobs</a></li>
+						<li><a href="#">Access Database</a></li>
+						<li><a href="#">Manage Responses</a></li>
+						<li><a href="#">Report a Problem</a></li>
+						<li><a href="#">Mobile Site</a></li>
+						<li><a href="#">Jobs by Skill</a></li>
+					</ul>
+				</div> -->
+
+            <div class="col-md-3 col-sm-6">
+                <h4>Síguenos</h4>
+                <address>
+                    <ul>
+                        <li>1201, Murakeu Market, QUCH07<br>
+                            United Kingdon</li>
+                        <li>Email: Support@job.com</li>
+                        <li>Call: 044 123 458 65879</li>
+                        <li>Skype: job@skype</li>
+                        <li>FAX: 123 456 85</li>
+                    </ul>
+                </address>
+            </div>
+
+            <!-- <div class="col-md-3 col-sm-6">
+					<h4>Drop A Mail</h4>
+					<form>
+						<input type="text" class="form-control input-lg" placeholder="Your Name">
+						<input type="text" class="form-control input-lg" placeholder="Email...">
+						<textarea class="form-control" placeholder="Message"></textarea>
+						<button type="submit" class="btn btn-primary">Login</button>
+					</form>
+				</div> -->
+
+
+        </div>
+        <div class="copy-right">
+            <p>&copy;Copyright 2025 Worklink Solutions | Diseñado por <a
+                    href="https://www.linkedin.com/in/bryan-andres-candelario-miranda-9a565213a/"> B.A.C.M.</a></p>
+        </div>
+    </footer>
+
+    <script type="text/javascript" src="js/jquery.min.js"></scrip >
+            <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/owl.carousel.min.js"></script>
+    <script src="js/bootsnav.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
