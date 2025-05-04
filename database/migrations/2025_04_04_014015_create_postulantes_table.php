@@ -23,7 +23,6 @@ return new class extends Migration
             $table->string('primerApellido', 25);
             $table->string('segundoApellido', 25)->nullable();
             $table->string('numTelefono', 8);
-            $table->string('email', 50);
             $table->timestamps();
         });
     }

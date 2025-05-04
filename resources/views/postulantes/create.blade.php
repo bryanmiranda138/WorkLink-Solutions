@@ -1,13 +1,11 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Agregar información de Postulante') }}
         </h2>
     </x-slot>
 
 <div class="container">
-    <h2>Crear Postulante</h2>
-
     <form action="{{ route('postulantes.store') }}" method="POST">
         @csrf
 
@@ -54,11 +52,6 @@
         <div class="mb-3">
             <label for="numTelefono" class="form-label">Número de teléfono</label>
             <input type="text" name="numTelefono" class="form-control" required>
-        </div>
-
-        <div class="mb-3">
-            <label for="email" class="form-label">Correo electrónico</label>
-            <input type="text" name="email" class="form-control" required>
         </div>
 
         {{-- Ubicaciones --}}

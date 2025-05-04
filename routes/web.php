@@ -30,19 +30,13 @@ Route::get('/dashboard', function () {
 /**General user routes **/
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'generalUserDashboard'])->name('dashboard');
-    Route::get('/dashboard/postulantes', [PostulanteController::class, 'index'])->name('postulantes.index');
-    Route::get('/dashboard/postulantes/create', [PostulanteController::class, 'create'])->name('postulantes.create');
-    Route::get('/dashboard/postulantes/edit', [PostulanteController::class, 'edit'])->name('postulantes.edit');
-    Route::get('/dashboard/postulantes/store', [PostulanteController::class, 'store'])->name('postulantes.store');
+    Route::resource('/dashboard/postulantes', PostulanteController::class)->names('postulantes');
 });
 
 /**Admin routes **/
 Route::middleware('adminAuth')->prefix('admin')->group(function(){
     Route::get('/dashboard', [DashboardController::class, 'adminDashboard'])->name('adminDashboardShow');
-    Route::get('/dashboard/empresas', [EmpresaController::class, 'index'])->name('empresas.index');
-    Route::get('/dashboard/empresas/create', [EmpresaController::class, 'create'])->name('empresas.create');
-    Route::get('/dashboard/empresas/edit', [EmpresaController::class, 'edit'])->name('empresas.edit');
-    Route::get('/dashboard/empresas/store', [EmpresaController::class, 'store'])->name('empresas.store');
+    Route::resource('/dashboard/empresas', EmpresaController::class)->names('empresas');
 });
 
 /**Super Admin routes **/

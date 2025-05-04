@@ -1,11 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Editar información personal') }}
         </h2>
     </x-slot>
 <div class="container">
-    <h2>Editar Postulante</h2>
 
     <form action="{{ route('postulantes.update', $postulante->idPostulante) }}" method="POST">
         @csrf
@@ -54,11 +53,6 @@
         <div class="mb-3">
             <label for="numTelefono" class="form-label">Número de teléfono</label>
             <input type="text" name="numTelefono" class="form-control" value="{{ $postulante->numTelefono }}" required>
-        </div>
-
-        <div class="mb-3">
-            <label for="email" class="form-label">Correo electrónico</label>
-            <input type="text" name="email" class="form-control" value="{{ $postulante->email }}" required>
         </div>
 
         {{-- Ubicación --}}
