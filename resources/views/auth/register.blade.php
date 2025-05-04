@@ -16,6 +16,25 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
+        <!-- Type Address -->
+        <div class="mt-4">
+            <x-input-label for="type" :value="__('Tipo de Usuario')" />
+
+            <div class="flex items-center space-x-4 mt-2">
+                <label class="flex items-center">
+                    <input type="radio" name="type" value="0" {{ old('type') == '0' ? 'checked' : '' }}>
+                    <span class="ml-2">Postulante</span>
+                </label>
+
+                <label class="flex items-center">
+                    <input type="radio" name="type" value="1" {{ old('type') == '1' ? 'checked' : '' }}>
+                    <span class="ml-2">Empresa</span>
+                </label>
+            </div>
+
+            <x-input-error :messages="$errors->get('type')" class="mt-2" />
+        </div>       
+
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
