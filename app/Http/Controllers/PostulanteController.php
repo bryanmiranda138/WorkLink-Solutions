@@ -36,7 +36,6 @@ class PostulanteController extends Controller
             'primerApellido' => 'required',
             'segundoApellido' => 'nullable',
             'numTelefono' => 'required',
-            'email' => 'required',
             'idiomas.*.idioma' => 'required',
             'idiomas.*.nivel' => 'required',
             'habilidades.*.habilidad' => 'required',
@@ -70,7 +69,6 @@ class PostulanteController extends Controller
             'primerApellido',
             'segundoApellido',
             'numTelefono',
-            'email'
         ]));
 
         if ($request->has('ubicacion__postulantes')) {
@@ -134,7 +132,6 @@ class PostulanteController extends Controller
             'primerApellido' => 'required',
             'segundoApellido' => 'nullable',
             'numTelefono' => 'required',
-            'email' => 'required',
             'idiomas.*.idioma' => 'required',
             'idiomas.*.nivel' => 'required',
             'habilidades.*.habilidad' => 'required',
@@ -167,8 +164,7 @@ class PostulanteController extends Controller
             'segundoNombre',
             'primerApellido',
             'segundoApellido',
-            'numTelefono',
-            'email'
+            'numTelefono'
         ]));
 
         $idsEnFormulario = [];

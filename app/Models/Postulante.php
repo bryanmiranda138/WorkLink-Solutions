@@ -13,7 +13,7 @@ class Postulante extends Model
     public $incrementing = true;
     protected $keyType = 'int';
     protected $fillable = ['dui', 'genero', 'fechaNacimiento', 'primerNombre', 'segundoNombre', 
-    'primerApellido', 'segundoApellido', 'numTelefono', 'email'];
+    'primerApellido', 'segundoApellido', 'numTelefono'];
 
     public function ubicacion__postulantes()
     {
