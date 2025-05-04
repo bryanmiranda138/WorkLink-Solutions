@@ -1,6 +1,9 @@
-@extends('layouts.empresa')
-
-@section('content')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Lista de Empresas') }}
+        </h2>
+    </x-slot>
     <h1>Lista de Empresas</h1>
     <a href="{{ route('empresas.create') }}">Agregar Empresa</a>
     <ul>
@@ -15,4 +18,4 @@
             </li>
         @endforeach
     </ul>
-@endsection
+</x-app-layout>
