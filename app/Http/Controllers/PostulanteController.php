@@ -113,7 +113,7 @@ class PostulanteController extends Controller
             }
         }
 
-        return redirect()->route('postulantes.index');
+        return redirect()->route('dashboard');
     }
 
     public function edit(Postulante $postulante)
@@ -402,12 +402,12 @@ class PostulanteController extends Controller
             ->whereNotIn('idLogro', $idsEnFormulario)
             ->delete();             
 
-        return redirect()->route('postulantes.index');
+        return redirect()->route('dashboard');
     }
 
     public function destroy(Postulante $postulante)
     {
         $postulante->delete();
-        return redirect()->route('postulantes.index');
+        return redirect()->route('dashboard');
     }
 }

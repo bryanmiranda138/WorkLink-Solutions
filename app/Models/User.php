@@ -50,7 +50,7 @@ class User extends Authenticatable
 
     public function getUserDataRouteName(): string
     {
-        return $this->type === 1 ? 'empresas.index' : 'postulantes.index';
+        return $this->type === 1 ? 'empresas.create' : 'postulantes.create';
     }
 
 }
