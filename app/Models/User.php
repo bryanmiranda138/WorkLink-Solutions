@@ -24,6 +24,11 @@ class User extends Authenticatable
         'type',
     ];
 
+    public function postulante()
+    {   
+        return $this->hasOne(Postulante::class, 'user_id', 'id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

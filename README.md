@@ -26,13 +26,13 @@ php artisan make:seeder NombreSeed
 php artisan db:seed
 
 ## Usuario Postulante
-## Email: post01@gmail.com
-## Contraseña: 123456789
+Email: post01@gmail.com
+Contraseña: 123456789
 
 ## Usuario Empresa
-## Email: empre01@gmail.com
-## Contraseña: 123456789
+Email: empre01@gmail.com
+Contraseña: 123456789
 
 ## Usuario Súper Admin
-## Email: super01@gmail.com
-## Contraseña: 123456789
+Email: super01@gmail.com
+Contraseña: 123456789

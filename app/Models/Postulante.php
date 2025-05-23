@@ -13,7 +13,7 @@ class Postulante extends Model
     public $incrementing = true;
     protected $keyType = 'int';
     protected $fillable = ['dui', 'genero', 'fechaNacimiento', 'primerNombre', 'segundoNombre', 
-    'primerApellido', 'segundoApellido', 'numTelefono'];
+    'primerApellido', 'segundoApellido', 'numTelefono', 'user_id'];
 
     public function ubicacion__postulantes()
     {
@@ -48,5 +48,10 @@ class Postulante extends Model
     public function logros()
     {
         return $this->hasMany(Logro::class, 'postulante_id', 'idPostulante');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

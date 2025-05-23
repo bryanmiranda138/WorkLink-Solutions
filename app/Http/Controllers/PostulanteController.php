@@ -16,7 +16,7 @@ class PostulanteController extends Controller
 {
     public function index()
     {
-        $postulantes = Postulante::all();
+        $postulantes = Postulante::where('user_id', auth()->id())->first();
         return view('postulantes.index', compact('postulantes'));
     }
 
@@ -36,6 +36,7 @@ class PostulanteController extends Controller
             'primerApellido' => 'required',
             'segundoApellido' => 'nullable',
             'numTelefono' => 'required',
+            'user_id' => 'required',
             'idiomas.*.idioma' => 'required',
             'idiomas.*.nivel' => 'required',
             'habilidades.*.habilidad' => 'required',
@@ -69,6 +70,7 @@ class PostulanteController extends Controller
             'primerApellido',
             'segundoApellido',
             'numTelefono',
+            'user_id'
         ]));
 
         if ($request->has('ubicacion__postulantes')) {
@@ -132,6 +134,7 @@ class PostulanteController extends Controller
             'primerApellido' => 'required',
             'segundoApellido' => 'nullable',
             'numTelefono' => 'required',
+            'user_id' => 'required',
             'idiomas.*.idioma' => 'required',
             'idiomas.*.nivel' => 'required',
             'habilidades.*.habilidad' => 'required',
@@ -164,7 +167,8 @@ class PostulanteController extends Controller
             'segundoNombre',
             'primerApellido',
             'segundoApellido',
-            'numTelefono'
+            'numTelefono',
+            'user_id'
         ]));
 
         $idsEnFormulario = [];

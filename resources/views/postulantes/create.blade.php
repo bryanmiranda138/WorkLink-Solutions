@@ -54,7 +54,9 @@
                         <div>
                             <label for="numTelefono" class="form-label">Número de teléfono:</label>
                             <input type="text" name="numTelefono" class="form-control" required>
-                        </div>                         
+                        </div> 
+                        <input type="hidden" name="user_id" class="form-control" 
+                            value="{{ auth()->id() }}" required readonly>                      
                     </div>                                            
                 </div>
 
