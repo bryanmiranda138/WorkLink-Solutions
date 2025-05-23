@@ -1,65 +1,75 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Editar Empresa') }}
+            {{ __('Editar información personal') }}
         </h2>
     </x-slot>
-<div class="container">
-    <h2>Editar Empresa</h2>
 
+<div class="container">
     <form action="{{ route('empresas.update', $empresa->idEmpresa) }}" method="POST">
         @csrf
         @method('PUT')
 
-        {{-- Datos de la empresa --}}
-        <div class="mb-3">
-            <label for="nomEmpresa" class="form-label">Nombre de la empresa</label>
-            <input type="text" name="nomEmpresa" class="form-control" value="{{ $empresa->nomEmpresa }}" required>
-        </div>
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
-        <div class="mb-3">
-            <label for="sector" class="form-label">Sector</label>
-            <input type="text" name="sector" class="form-control" value="{{ $empresa->sector }}" required>
-        </div>
+                {{-- Datos de la empresa --}}
+                <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg"> 
+                    <h1 class="text-2xl font-bold">Información personal</h1>
+                    <hr/>  
+                    <br/>   
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">              
+                        <div>
+                            <label for="nomEmpresa" class="form-label">Empresa:</label>
+                            <input type="text" name="nomEmpresa" class="form-control" value="{{ $empresa->nomEmpresa }}" required>
+                        </div>
 
-        <div class="mb-3">
-            <label for="email" class="form-label">Correo electrónico</label>
-            <input type="text" name="email" class="form-control" value="{{ $empresa->email }}">
-        </div>
+                        <div>
+                            <label for="sector" class="form-label">Sector:</label>
+                            <input type="text" name="sector" class="form-control" value="{{ $empresa->sector }}" required>
+                        </div>
 
-        <div class="mb-3">
-            <label for="telefono" class="form-label">Teléfono</label>
-            <input type="text" name="telefono" class="form-control" value="{{ $empresa->telefono }}" required>
-        </div>
+                        <div>
+                            <label for="email" class="form-label">Correo electrónico:</label>
+                            <input type="text" name="email" class="form-control" value="{{ $empresa->email }}">
+                        </div>
 
-        {{-- Ubicación --}}
-        <hr>
-        <h4>Ubicación</h4>
-        <div id="ubicacion__empresas-container">
-            @foreach ($empresa->ubicacion__empresas as $index => $ubicacion_empresa)
-                <div class="ubicacion_empresa mb-3 border p-3 rounded">
-                    <input type="hidden" name="ubicacion__empresas[{{ $index }}][id]" value="{{ $ubicacion_empresa->idUbicacionEmpresa }}">
-                    <div class="mb-2">
-                        <label>Departamento</label>
-                        <input type="text" name="ubicacion__empresas[{{ $index }}][nomDepartamento]" class="form-control" value="{{ $ubicacion_empresa->nomDepartamento }}" required>
+                        <div>
+                            <label for="telefono" class="form-label">Teléfono:</label>
+                            <input type="text" name="telefono" class="form-control" value="{{ $empresa->telefono }}" required>
+                        </div>
                     </div>
-                    <div class="mb-2">
-                        <label>Municipio</label>
-                        <input type="text" name="ubicacion__empresas[{{ $index }}][nomMunicipio]" class="form-control" value="{{ $ubicacion_empresa->nomMunicipio }}" required>
-                    </div>
-                    <div class="mb-2">
-                        <label>Dirección</label>
-                        <input type="text" name="ubicacion__empresas[{{ $index }}][direccion]" class="form-control" value="{{ $ubicacion_empresa->direccion }}" required>
-                    </div>                    
-                    <button type="button" class="btn btn-danger btn-sm remove-ubicacion_empresa">Eliminar</button>
                 </div>
-            @endforeach
+
+                {{-- Ubicación --}}
+                <div id="ubicacion__empresas-container" class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+                    @foreach ($empresa->ubicacion__empresas as $index => $ubicacion_empresa)
+                        <div class="ubicacion_empresa grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                            <input type="hidden" name="ubicacion__empresas[{{ $index }}][id]" value="{{ $ubicacion_empresa->idUbicacionEmpresa }}">
+                            <div>
+                                <label>Departamento:</label>
+                                <input type="text" name="ubicacion__empresas[{{ $index }}][nomDepartamento]" class="form-control" value="{{ $ubicacion_empresa->nomDepartamento }}" required>
+                            </div>
+                            <div>
+                                <label>Municipio:</label>
+                                <input type="text" name="ubicacion__empresas[{{ $index }}][nomMunicipio]" class="form-control" value="{{ $ubicacion_empresa->nomMunicipio }}" required>
+                            </div>
+                            <div>
+                                <label>Dirección:</label>
+                                <input type="text" name="ubicacion__empresas[{{ $index }}][direccion]" class="form-control" value="{{ $ubicacion_empresa->direccion }}" required>
+                            </div> 
+                            <div>                   
+                            <button type="button" class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded mb-3" 
+                                id="add-ubicacion_empresa">Agregar ubicación</button>
+                            </div> 
+                        </div>
+                    @endforeach
+                </div>                      
+            </div>
         </div>
-
-        <button type="button" class="btn btn-secondary mb-3" id="add-ubicacion_empresa">Agregar ubicación</button>
-
-        <div>
-            <button type="submit" class="btn btn-primary">Actualizar</button>
+        <div class="flex justify-center">
+            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded mb-3"
+                >Actualizar</button>
         </div>
     </form>
 </div>
@@ -71,20 +81,24 @@
         const container = document.getElementById('ubicacion__empresas-container');
 
         const ubicacion_empresaHtml = `
-            <div class="ubicacion_empresa mb-3 border p-3 rounded">
-                <div class="mb-2">
-                    <label>Departamento</label>
-                    <input type="text" name="ubicacion__empresas[${ubicacion_empresaIndex}][nomDepartamento]" class="form-control" required>
+            <div class="ubicacion_empresa">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    <div>
+                        <label>Departamento:</label>
+                        <input type="text" name="ubicacion__empresas[${ubicacion_empresaIndex}][nomDepartamento]" class="form-control" required>
+                    </div>
+                    <div>
+                        <label>Municipio:</label>
+                        <input type="text" name="ubicacion__empresas[${ubicacion_empresaIndex}][nomMunicipio]" class="form-control" required>
+                    </div>
+                    <div>
+                        <label>Dirección:</label>
+                        <input type="text" name="ubicacion__empresas[${ubicacion_empresaIndex}][direccion]" class="form-control" required>
+                    </div>
+                    <div>
+                    <button type="button" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded mb-3 remove-ubicacion_empresa">Eliminar</button>
+                    </div>
                 </div>
-                <div class="mb-2">
-                    <label>Municipio</label>
-                    <input type="text" name="ubicacion__empresas[${ubicacion_empresaIndex}][nomMunicipio]" class="form-control" required>
-                </div>
-                <div class="mb-2">
-                    <label>Dirección</label>
-                    <input type="text" name="ubicacion__empresas[${ubicacion_empresaIndex}][direccion]" class="form-control" required>
-                </div>
-                <button type="button" class="btn btn-danger btn-sm remove-ubicacion_empresa">Eliminar</button>
             </div>
         `;
 
