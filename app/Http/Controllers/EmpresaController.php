@@ -44,7 +44,7 @@ class EmpresaController extends Controller
             }
         }
 
-        return redirect()->route('empresas.index');
+        return redirect()->route('adminDashboardShow');
     }
 
     public function edit(Empresa $empresa)
@@ -106,12 +106,12 @@ class EmpresaController extends Controller
             ->whereNotIn('idUbicacionEmpresa', $idsEnFormulario)
             ->delete();          
 
-        return redirect()->route('empresas.index');
+        return redirect()->route('adminDashboardShow');
     }
 
     public function destroy(Empresa $empresa)
     {
         $empresa->delete();
-        return redirect()->route('empresas.index');
+        return redirect()->route('adminDashboardShow');
     }
 }
