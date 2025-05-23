@@ -23,7 +23,13 @@ return new class extends Migration
             $table->string('primerApellido', 25);
             $table->string('segundoApellido', 25)->nullable();
             $table->string('numTelefono', 8);
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+
+            $table->foreign('user_id')
+            ->references('id')
+            ->on('users')
+            ->onDelete('cascade');
         });
     }
 

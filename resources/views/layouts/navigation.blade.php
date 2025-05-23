@@ -15,12 +15,22 @@
                 >
                     {{ __('Inicio') }}
                 </x-nav-link>
+                @if (!isset($postulante))
                 <x-nav-link 
                     :href="route(Auth::user()->getUserDataRouteName())" 
                     :active="request()->routeIs(Auth::user()->getUserDataRouteName())"
                 >
                     {{ __('Información del usuario') }}
                 </x-nav-link> 
+                @endif 
+                @if (Auth::user()->type == 0 && isset($postulante))
+                    <x-nav-link 
+                        :href="route('postulantes.edit', $postulante->idPostulante)" 
+                        :active="request()->routeIs('postulantes.edit')"
+                    >
+                        {{ __('Editar información del usuario') }}
+                    </x-nav-link>
+                @endif                
                 </div>
             </div>
 
