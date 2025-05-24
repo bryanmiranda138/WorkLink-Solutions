@@ -15,12 +15,13 @@
                 >
                     {{ __('Inicio') }}
                 </x-nav-link>
-                @if (!isset($postulante))
+                @if ((Auth::user()->type == 0 && !isset($postulante)) ||
+                    (Auth::user()->type == 1 && !isset($empresa)))
                 <x-nav-link 
                     :href="route(Auth::user()->getUserDataRouteName())" 
                     :active="request()->routeIs(Auth::user()->getUserDataRouteName())"
                 >
-                    {{ __('Información del usuario') }}
+                    {{ __('Agregar información del usuario') }}
                 </x-nav-link> 
                 @endif 
                 @if (Auth::user()->type == 0 && isset($postulante))
@@ -30,7 +31,15 @@
                     >
                         {{ __('Editar información del usuario') }}
                     </x-nav-link>
-                @endif                
+                @endif
+                @if (Auth::user()->type == 1 && isset($empresa))
+                    <x-nav-link 
+                        :href="route('empresas.edit', $empresa->idEmpresa)" 
+                        :active="request()->routeIs('empresas.edit')"
+                    >
+                        {{ __('Editar información del usuario') }}
+                    </x-nav-link>
+                @endif                                 
                 </div>
             </div>
 
