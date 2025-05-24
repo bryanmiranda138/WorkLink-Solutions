@@ -39,7 +39,21 @@
                     >
                         {{ __('Editar información del usuario') }}
                     </x-nav-link>
-                @endif                                 
+                    <x-nav-link 
+                        :href="route('ofertas.create')" 
+                        :active="request()->routeIs('ofertas.create')"
+                    >
+                        {{ __('Agregar oferta') }}
+                    </x-nav-link>                    
+                @endif
+                @if (Auth::user()->type == 1 && isset($oferta))
+                    <x-nav-link 
+                        :href="route('ofertas.index')" 
+                        :active="request()->routeIs('ofertas.index')"
+                    >
+                        {{ __('Editar información de las ofertas') }}
+                    </x-nav-link>                   
+                @endif                                  
                 </div>
             </div>
 

@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use App\Models\Postulante;
 use App\Models\Empresa;
+use App\Models\Oferta;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,15 +29,22 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer('*', function ($view) {
             if (auth()->check()) {
-                $postulante = Postulante::where('user_id', auth()->id())->first();
-                $view->with('postulante', $postulante);
-            }
-        });
+                $userId = auth()->id();
 
-        View::composer('*', function ($view) {
-            if (auth()->check()) {
-                $empresa = Empresa::where('user_id', auth()->id())->first();
-                $view->with('empresa', $empresa);
+                // Obtener postulante
+                $postulante = Postulante::where('user_id', $userId)->first();
+
+                // Obtener empresa
+                $empresa = Empresa::where('user_id', $userId)->first();
+
+                // Obtener una oferta si existe
+                $oferta = null;
+                if ($empresa) {
+                    $oferta = Oferta::where('empresa_id', $empresa->idEmpresa)->get();
+                }
+
+                // Compartir variables con todas las vistas
+                $view->with(compact('postulante', 'empresa', 'oferta'));
             }
         });
     }

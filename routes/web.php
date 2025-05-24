@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PostulanteController;
 use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\OfertaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,6 +38,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::middleware('adminAuth')->prefix('admin')->group(function(){
     Route::get('/dashboard', [DashboardController::class, 'adminDashboard'])->name('adminDashboardShow');
     Route::resource('/dashboard/empresas', EmpresaController::class)->names('empresas');
+    Route::resource('/dashboard/ofertas', OfertaController::class)->names('ofertas');
 });
 
 /**Super Admin routes **/

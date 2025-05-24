@@ -25,6 +25,14 @@ php artisan make:seeder NombreSeed
 ## Aplicar seed de BD
 php artisan db:seed
 
+## Limpieza de rutas
+php artisan route:clear
+php artisan config:clear
+php artisan cache:clear
+php artisan view:clear
+composer dump-autoload
+php artisan route:list
+
 ## Usuario Postulante
 Email: post01@gmail.com
 Contraseña: 123456789
