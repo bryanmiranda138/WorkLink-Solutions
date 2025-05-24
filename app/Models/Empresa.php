@@ -20,6 +20,11 @@ class Empresa extends Model
         return $this->hasMany(Ubicacion_Empresa::class, 'empresa_id', 'idEmpresa');
     }
 
+    public function ofertas()
+    {
+        return $this->hasMany(Oferta::class, 'oferta_id', 'idOferta');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
