@@ -13,10 +13,15 @@ class Empresa extends Model
     protected $primaryKey = 'idEmpresa'; 
     public $incrementing = true;
     protected $keyType = 'int';
-    protected $fillable = ['nomEmpresa', 'sector', 'email', 'telefono'];
+    protected $fillable = ['nomEmpresa', 'sector', 'email', 'telefono', 'user_id'];
 
     public function ubicacion__empresas()
     {
         return $this->hasMany(Ubicacion_Empresa::class, 'empresa_id', 'idEmpresa');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

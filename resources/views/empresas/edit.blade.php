@@ -61,6 +61,9 @@
                             <div>                   
                             <button type="button" class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded mb-3" 
                                 id="add-ubicacion_empresa">Agregar ubicación</button>
+                            <button type="button" 
+                                class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded mb-3 remove-ubicacion_empresa"
+                                >Eliminar</button>
                             </div> 
                         </div>
                     @endforeach

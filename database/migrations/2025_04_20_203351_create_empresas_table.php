@@ -19,7 +19,13 @@ return new class extends Migration
             $table->string('sector', 25);
             $table->string('email', 50);
             $table->string('telefono', 8);
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+
+            $table->foreign('user_id')
+            ->references('id')
+            ->on('users')
+            ->onDelete('cascade');
         });
     }
 

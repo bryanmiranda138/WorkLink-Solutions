@@ -10,7 +10,7 @@ class EmpresaController extends Controller
 {
     public function index()
     {
-        $empresas = Empresa::all();
+        $empresas = Empresa::where('user_id', auth()->id())->first();;
         return view('empresas.index', compact('empresas'));
     }
 
@@ -26,6 +26,7 @@ class EmpresaController extends Controller
             'sector' => 'required',
             'email' => 'required', 
             'telefono' => 'required',
+            'user_id' => 'required',
             'ubicacion__empresas.*.nomDepartamento' => 'required',   
             'ubicacion__empresas.*.nomMunicipio' => 'required', 
             'ubicacion__empresas.*.direccion' => 'required'              
@@ -35,7 +36,8 @@ class EmpresaController extends Controller
             'nomEmpresa',
             'sector',
             'email', 
-            'telefono'
+            'telefono',
+            'user_id'
         ]));
 
         if ($request->has('ubicacion__empresas')) {
@@ -59,6 +61,7 @@ class EmpresaController extends Controller
             'sector' => 'required',
             'email' => 'required', 
             'telefono' => 'required',
+            'user_id' => 'required',
             'ubicacion__empresas.*.nomDepartamento' => 'required',   
             'ubicacion__empresas.*.nomMunicipio' => 'required', 
             'ubicacion__empresas.*.direccion' => 'required'    
@@ -68,7 +71,8 @@ class EmpresaController extends Controller
             'nomEmpresa',
             'sector',
             'email', 
-            'telefono'
+            'telefono',
+            'user_id'
         ]));
 
         $idsEnFormulario = [];
