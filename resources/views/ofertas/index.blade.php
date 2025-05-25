@@ -19,7 +19,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($ofertas as $oferta)
+                        @forelse ($ofertasSameId as $oferta)
                             <tr class="text-gray-700 dark:text-gray-300 text-center">
                                 <td class="px-4 py-2 border-b">{{ $oferta->tituloOferta }}</td>
                                 <td class="px-4 py-2 border-b">{{ $oferta->fechaPublicacion }}</td>
