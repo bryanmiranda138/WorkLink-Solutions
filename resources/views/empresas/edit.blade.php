@@ -38,6 +38,9 @@
                             <label for="telefono" class="form-label">Teléfono:</label>
                             <input type="text" name="telefono" class="form-control" value="{{ $empresa->telefono }}" required>
                         </div>
+
+                        <input type="hidden" name="user_id" class="form-control" 
+                            value="{{ auth()->id() }}" required readonly>                        
                     </div>
                 </div>
 

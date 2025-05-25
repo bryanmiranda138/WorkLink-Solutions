@@ -15,14 +15,14 @@ return new class extends Migration
     {
         Schema::create('postulantes', function (Blueprint $table) {
             $table->id('idPostulante');
-            $table->string('dui', 10);
+            $table->string('dui', 25);
             $table->string('genero', 10);
             $table->date('fechaNacimiento');
             $table->string('primerNombre', 25);
             $table->string('segundoNombre', 25)->nullable();
             $table->string('primerApellido', 25);
             $table->string('segundoApellido', 25)->nullable();
-            $table->string('numTelefono', 8);
+            $table->string('numTelefono', 25);
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 

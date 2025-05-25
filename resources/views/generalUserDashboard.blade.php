@@ -5,6 +5,7 @@
         </h2>
     </x-slot>
 
+    @if (Auth::user()->type == 0 && isset($postulante))
     <div class="py-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-6">
             <h1 class="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Ofertas disponibles</h1>
@@ -51,4 +52,5 @@
             @endif
         </div>
     </div>
+    @endif
 </x-app-layout>
