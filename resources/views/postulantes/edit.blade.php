@@ -24,12 +24,12 @@
                             <input type="text" name="dui" class="form-control" value="{{ $postulante->dui }}" required>
                         </div>
 
-                        <div >
+                        <div>
                             <label for="genero" class="form-label">Género:</label>
-                            <select name="genero" id="genero" class="form-select" value="{{ $postulante->genero }}" required>
+                            <select name="genero" id="genero" class="form-select" required>
                                 <option value="">Seleccione una opción</option>
-                                <option value="Masculino">Masculino</option>
-                                <option value="Femenino">Femenino</option>
+                                <option value="Masculino" {{ $postulante->genero == 'Masculino' ? 'selected' : '' }}>Masculino</option>
+                                <option value="Femenino" {{ $postulante->genero == 'Femenino' ? 'selected' : '' }}>Femenino</option>
                             </select>
                         </div>
 
@@ -62,6 +62,9 @@
                             <label for="numTelefono" class="form-label">Número de teléfono:</label>
                             <input type="text" name="numTelefono" class="form-control" value="{{ $postulante->numTelefono }}" required>
                         </div>
+
+                        <input type="hidden" name="user_id" class="form-control" 
+                            value="{{ auth()->id() }}" required readonly>                         
                     </div>
                 </div>
 

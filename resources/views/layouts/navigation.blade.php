@@ -57,7 +57,28 @@
                 </div>
             </div>
 
-            <!-- Settings Dropdown -->
+            <!-- User Settings - Visible Links -->
+<div class="hidden sm:flex sm:items-center sm:ml-6 space-x-4">
+    <!-- Nombre del usuario -->
+    <div class="text-sm font-medium text-gray-700 dark:text-gray-300">
+        {{ Auth::user()->name }}
+    </div>
+
+    <!-- Mi Perfil -->
+    <a href="{{ route('profile.edit') }}" class="text-sm text-gray-700 dark:text-gray-300 hover:underline">
+        {{ __('Mi Perfil') }}
+    </a>
+
+    <!-- Cerrar sesión -->
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <button type="submit" class="text-sm text-gray-700 dark:text-gray-300 hover:underline">
+            {{ __('Cerrar sesión') }}
+        </button>
+    </form>
+</div>
+
+ <!--           
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
@@ -77,7 +98,6 @@
                             {{ __('Mi Perfil') }}
                         </x-dropdown-link>
 
-                        <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
@@ -91,7 +111,6 @@
                 </x-dropdown>
             </div>
 
-            <!-- Hamburger -->
             <div class="-mr-2 flex items-center sm:hidden">
                 <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -100,6 +119,7 @@
                     </svg>
                 </button>
             </div>
+            -->
         </div>
     </div>
 
