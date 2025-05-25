@@ -38,13 +38,17 @@ class AppServiceProvider extends ServiceProvider
                 $empresa = Empresa::where('user_id', $userId)->first();
 
                 // Obtener una oferta si existe
+                $ofertasSameId = null;
                 $oferta = null;
                 if ($empresa) {
-                    $oferta = Oferta::where('empresa_id', $empresa->idEmpresa)->get();
+                    $ofertasSameId = Oferta::where('empresa_id', $empresa->idEmpresa)->get();
+                    $oferta = Oferta::where('empresa_id', $empresa->idEmpresa)->first();
                 }
 
+                $ofertas = Oferta::all();              
+                
                 // Compartir variables con todas las vistas
-                $view->with(compact('postulante', 'empresa', 'oferta'));
+                $view->with(compact('postulante', 'empresa', 'oferta', 'ofertas', 'ofertasSameId'));
             }
         });
     }

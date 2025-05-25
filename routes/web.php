@@ -32,13 +32,14 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'generalUserDashboard'])->name('dashboard');
     Route::resource('/dashboard/postulantes', PostulanteController::class)->names('postulantes');
+    Route::resource('/dashboard/ofertas', OfertaController::class)->names('ofertas');
 });
 
 /**Admin routes **/
 Route::middleware('adminAuth')->prefix('admin')->group(function(){
     Route::get('/dashboard', [DashboardController::class, 'adminDashboard'])->name('adminDashboardShow');
     Route::resource('/dashboard/empresas', EmpresaController::class)->names('empresas');
-    Route::resource('/dashboard/ofertas', OfertaController::class)->names('ofertas');
+    //Route::resource('/dashboard/ofertas', OfertaController::class)->names('ofertas');
 });
 
 /**Super Admin routes **/

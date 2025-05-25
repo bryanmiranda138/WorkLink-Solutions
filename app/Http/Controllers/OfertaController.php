@@ -19,6 +19,12 @@ class OfertaController extends Controller
         return view('ofertas.index', compact('ofertas'));
     }
 
+    public function show($id)
+    {
+        $oferta = Oferta::where('idOferta', $id)->firstOrFail();
+        return view('ofertas.show', compact('oferta'));
+    }
+
     public function create()
     {
         return view('ofertas.create');

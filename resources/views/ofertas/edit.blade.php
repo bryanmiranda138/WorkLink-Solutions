@@ -26,12 +26,12 @@
 
                         <div>
                             <label for="descOferta" class="form-label">Descripción:</label>
-                            <textarea type="text" name="descOferta" class="form-control" value="{{ $oferta->descOferta }}" required></textarea>
+                            <textarea type="text" name="descOferta" class="form-control" value="{{ $oferta->descOferta }}" required>{{$oferta->descOferta}}</textarea>
                         </div>
 
                         <div>
                             <label for="requisitos" class="form-label">Requisitos:</label>
-                            <textarea type="text" name="requisitos" class="form-control" value="{{ $oferta->requisitos }}" required></textarea>
+                            <textarea type="text" name="requisitos" class="form-control" value="{{ $oferta->requisitos }}" required>{{$oferta->requisitos}}</textarea>
                         </div>
 
                         <div>
