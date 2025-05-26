@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PostulanteController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\OfertaController;
+use App\Http\Controllers\PostulacionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +34,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'generalUserDashboard'])->name('dashboard');
     Route::resource('/dashboard/postulantes', PostulanteController::class)->names('postulantes');
     Route::resource('/dashboard/ofertas', OfertaController::class)->names('ofertas');
+    Route::post('/dashboard/postulaciones', [PostulacionController::class, 'store'])->name('postulaciones.store');
 });
 
 /**Admin routes **/
