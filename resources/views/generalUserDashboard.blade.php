@@ -42,7 +42,16 @@
                                 class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
                                 Cerrar
                             </button>
-                        </div>
+                        <form action="{{ route('postulaciones.store') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="fechaPostulacion" value="{{ now()->toDateString() }}">
+                            <input type="hidden" name="oferta_id" value="{{ $oferta->idOferta }}">
+                            <button type="submit"
+                                class="mt-2 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+                                Postularme
+                            </button>
+                        </form>                            
+                        </div>                        
                     </div>
                 </div>
             @endforeach

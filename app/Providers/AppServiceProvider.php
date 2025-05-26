@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\View;
 use App\Models\Postulante;
 use App\Models\Empresa;
 use App\Models\Oferta;
+use App\Models\Postulacion;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -45,10 +46,20 @@ class AppServiceProvider extends ServiceProvider
                     $oferta = Oferta::where('empresa_id', $empresa->idEmpresa)->first();
                 }
 
-                $ofertas = Oferta::all();              
+                $ofertas = Oferta::all();   
+                
+                $postulacion = null;
+                if ($oferta) {
+                    $postulacion = Postulacion::where('user_id', $userId)
+                        ->where('oferta_id', $oferta->idOferta)
+                        ->first();
+                }
+
+                $postulaciones = Postulacion::all();
                 
                 // Compartir variables con todas las vistas
-                $view->with(compact('postulante', 'empresa', 'oferta', 'ofertas', 'ofertasSameId'));
+                $view->with(compact('postulante', 'empresa', 'oferta', 'ofertas', 
+                    'ofertasSameId', 'postulacion', 'postulaciones'));
             }
         });
     }
